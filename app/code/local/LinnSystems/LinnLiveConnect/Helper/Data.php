@@ -387,7 +387,8 @@ class LinnSystems_LinnLiveConnect_Helper_Data extends Mage_Core_Helper_Abstract
         if (in_array($websiteId, $currentWebsites) === false){
             $currentWebsites[] = $websiteId;
             $productData->websites = $currentWebsites;
-        }    
+        }
+        return $_loadedProduct->getId();
     }
 
     public function flushWsdlCache(){

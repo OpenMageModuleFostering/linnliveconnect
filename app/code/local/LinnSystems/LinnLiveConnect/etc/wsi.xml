@@ -280,7 +280,7 @@
       <xsd:complexType name="linnLiveBulkResultResponseEntity">
         <xsd:sequence>
           <xsd:element minOccurs="1" name="sku" type="xsd:string" />
-          <xsd:element minOccurs="1" name="productId" type="xsd:int" />
+          <xsd:element minOccurs="1" name="productId" type="xsd:string" />
           <xsd:element minOccurs="1" name="isError" type="xsd:boolean" />
           <xsd:element minOccurs="0" name="error" type="xsd:string" />
         </xsd:sequence>
@@ -297,7 +297,7 @@
       <xsd:complexType name="linnLiveBulkImageResponseEntity">
         <xsd:sequence>
           <xsd:element minOccurs="1" name="imageId" type="xsd:string" />
-          <xsd:element minOccurs="1" name="productId" type="xsd:int" />
+          <xsd:element minOccurs="1" name="productId" type="xsd:string" />
           <xsd:element minOccurs="1" name="isError" type="xsd:boolean" />
           <xsd:element minOccurs="0" name="error" type="xsd:string" />
           <xsd:element minOccurs="0" name="file" type="xsd:string" />
@@ -316,7 +316,7 @@
       <xsd:complexType name="linnLiveBulkRelatedProductsResponseEntity">
         <xsd:sequence>
           <xsd:element minOccurs="1" name="relatedId" type="xsd:string" />
-          <xsd:element minOccurs="1" name="productId" type="xsd:int" />
+          <xsd:element minOccurs="1" name="productId" type="xsd:string" />
           <xsd:element minOccurs="1" name="isError" type="xsd:boolean" />
           <xsd:element minOccurs="0" name="error" type="xsd:string" />
         </xsd:sequence>
@@ -370,9 +370,9 @@
       <xsd:complexType name="linnLiveDeleteProductImagesRequestEntity">
         <xsd:sequence>
           <xsd:element minOccurs="1" maxOccurs="1" name="imageId" type="xsd:string" />
-          <xsd:element minOccurs="1" maxOccurs="1" name="productId" type="xsd:string"></xsd:element>
-          <xsd:element minOccurs="1" maxOccurs="1" name="file" type="xsd:string"></xsd:element>
-          <xsd:element minOccurs="0" maxOccurs="1" name="identifierType" type="xsd:string"></xsd:element>
+          <xsd:element minOccurs="1" maxOccurs="1" name="productId" type="xsd:string" />
+          <xsd:element minOccurs="1" maxOccurs="1" name="file" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="identifierType" type="xsd:string" />
         </xsd:sequence>
       </xsd:complexType>
 

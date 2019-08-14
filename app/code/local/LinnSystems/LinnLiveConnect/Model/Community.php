@@ -337,12 +337,12 @@ class LinnSystems_LinnLiveConnect_Model_Community extends LinnSystems_LinnLiveCo
 	 *
 	 * @return boolean
 	 */
-	public function updateSimpleProduct($productId, $productData, $store = null, $identifierType = 'id') {
+	public function updateSimpleProduct($productIdentifier, $productData, $store = null, $identifierType = 'id') {
 
 		$helper = Mage::helper('linnLiveConnect');
 		$store = $helper -> currentStoreCode($store);
 
-		$helper -> updateProductData($productId, $productData, $store, $identifierType);
+		$helper -> updateProductData($productIdentifier, $productData, $store, $identifierType);
 
 		$productData = $helper -> updateProperties($productData);
 
@@ -350,7 +350,7 @@ class LinnSystems_LinnLiveConnect_Model_Community extends LinnSystems_LinnLiveCo
 
 		$productAPI = Mage::getModel('catalog/product_api_v2');
 
-		return $productAPI -> update($productId, $productData, $store, $identifierType);
+		return $productAPI -> update($productIdentifier, $productData, $store, $identifierType);
 	}
 
 	/**
@@ -358,7 +358,7 @@ class LinnSystems_LinnLiveConnect_Model_Community extends LinnSystems_LinnLiveCo
 	 *
 	 * @return boolean
 	 */
-	public function updateConfigurableProduct($productId, $reindex, $productData, $productsSet, $attributesSet, $store = null, $identifierType = 'id') {
+	public function updateConfigurableProduct($productIdentifier, $reindex, $productData, $productsSet, $attributesSet, $store = null, $identifierType = 'id') {
 
 		$helper = Mage::helper('linnLiveConnect');
 
@@ -368,15 +368,15 @@ class LinnSystems_LinnLiveConnect_Model_Community extends LinnSystems_LinnLiveCo
 
 		$store = $helper -> currentStoreCode($store);
 
-		$helper -> updateProductData($productId, $productData, $store, $identifierType);
+		$productId = $helper -> updateProductData($productIdentifier, $productData, $store, $identifierType);
 
 		$productAPI = Mage::getModel('catalog/product_api_v2');
 
-		$productAPI -> update($productId, $productData, $store, $identifierType);
+		$productAPI -> update($productIdentifier, $productData, $store, $identifierType);
 
 		list($assignedProductsArray, $attributesSetArray) = $this -> _prepareConfigurableData($productsSet, $attributesSet, $productId, true);
 
-		return $this -> _updateConfigurable($store, $productId, $assignedProductsArray, $attributesSetArray, $identifierType, true, $reindex);
+		return $this -> _updateConfigurable($store, $productIdentifier, $assignedProductsArray, $attributesSetArray, $identifierType, true, $reindex);
 	}
 
 	/**
