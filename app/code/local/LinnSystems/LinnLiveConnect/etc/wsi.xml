@@ -17,6 +17,9 @@
           <xsd:element minOccurs="0" maxOccurs="1" name="api_config" type="typens:linnLiveGetGeneralInfoApiConfigResponseDataEntity" />
           <xsd:element minOccurs="1" maxOccurs="1" name="compilation_enabled" type="xsd:boolean" />
           <xsd:element minOccurs="1" maxOccurs="1" name="max_upload_size" type="xsd:string" />
+          <xsd:element minOccurs="1" maxOccurs="1" name="store" type="xsd:string" />
+          <xsd:element minOccurs="1" maxOccurs="1" name="extension_version" type="xsd:string" />
+          <xsd:element minOccurs="1" maxOccurs="1" name="max_execution_time" type="xsd:string" />
         </xsd:sequence>
       </xsd:complexType>
 
@@ -688,7 +691,7 @@
           </xsd:sequence>
         </xsd:complexType>
       </xsd:element>
-      
+
       <xsd:element name="linnLiveCreateConfigurableProductsRequestParam">
         <xsd:complexType>
           <xsd:sequence>
@@ -810,6 +813,41 @@
           </xsd:sequence>
         </xsd:complexType>
       </xsd:element>
+
+      <xsd:element name="linnLiveCreateProductImagesByPathRequestParam">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="sessionId" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="version" type="xsd:int" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="data" type="typens:linnLiveCreateProductImagesRequestArray" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="linnLiveCreateProductImagesByPathResponseParam">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="result"  minOccurs="0"  type="typens:linnLiveBulkImageResponseArray"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
+      <xsd:element name="linnLiveCreateProductImagesByUrlRequestParam">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="sessionId" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="version" type="xsd:int" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="data" type="typens:linnLiveCreateProductImagesRequestArray" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="linnLiveCreateProductImagesByUrlResponseParam">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="result"  minOccurs="0"  type="typens:linnLiveBulkImageResponseArray"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
 
       <xsd:element name="linnLiveUpdateProductImagesRequestParam">
         <xsd:complexType>
@@ -988,7 +1026,21 @@
   <wsdl:message name="linnLiveCreateProductImagesResponse">
     <wsdl:part name="parameters" element="typens:linnLiveCreateProductImagesResponseParam" />
   </wsdl:message>
-  
+
+  <wsdl:message name="linnLiveCreateProductImagesByPathRequest">
+    <wsdl:part name="parameters" element="typens:linnLiveCreateProductImagesByPathRequestParam" />
+  </wsdl:message>
+  <wsdl:message name="linnLiveCreateProductImagesByPathResponse">
+    <wsdl:part name="parameters" element="typens:linnLiveCreateProductImagesByPathResponseParam" />
+  </wsdl:message>
+
+  <wsdl:message name="linnLiveCreateProductImagesByUrlRequest">
+    <wsdl:part name="parameters" element="typens:linnLiveCreateProductImagesByUrlRequestParam" />
+  </wsdl:message>
+  <wsdl:message name="linnLiveCreateProductImagesByUrlResponse">
+    <wsdl:part name="parameters" element="typens:linnLiveCreateProductImagesByUrlResponseParam" />
+  </wsdl:message>
+
   <wsdl:message name="linnLiveUpdateProductImagesRequest">
     <wsdl:part name="parameters" element="typens:linnLiveUpdateProductImagesRequestParam" />
   </wsdl:message>
@@ -1017,7 +1069,7 @@
     <wsdl:part name="parameters" element="typens:linnLiveInfoResponseParam" />
   </wsdl:message>
 
-  <!-- Stub parameters for catalogProductAttributeRemove , remove for 1.8 -->
+  <!-- Stub parameters for catalogProductAttributeRemove , remove for 1.8 --> 
   <wsdl:message name="catalogProductAttributeRemoveRequest">
     <wsdl:part name="parameters" element="typens:linnLiveAttributeRemoveRequestParam" />
   </wsdl:message>
@@ -1067,6 +1119,18 @@
       <wsdl:documentation>Create bulk product images</wsdl:documentation>
       <wsdl:input message="typens:linnLiveCreateProductImagesRequest" />
       <wsdl:output message="typens:linnLiveCreateProductImagesResponse" />
+    </wsdl:operation>
+
+    <wsdl:operation name="linnLiveCreateProductImagesByPath">
+      <wsdl:documentation>Create bulk product images</wsdl:documentation>
+      <wsdl:input message="typens:linnLiveCreateProductImagesByPathRequest" />
+      <wsdl:output message="typens:linnLiveCreateProductImagesByPathResponse" />
+    </wsdl:operation>
+
+    <wsdl:operation name="linnLiveCreateProductImagesByUrl">
+      <wsdl:documentation>Create bulk product images</wsdl:documentation>
+      <wsdl:input message="typens:linnLiveCreateProductImagesByUrlRequest" />
+      <wsdl:output message="typens:linnLiveCreateProductImagesByUrlResponse" />
     </wsdl:operation>
 
     <wsdl:operation name="linnLiveUpdateProductImages">
@@ -1237,6 +1301,26 @@
 
 
     <wsdl:operation name="linnLiveCreateProductImages">
+      <soap:operation soapAction="" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+
+    <wsdl:operation name="linnLiveCreateProductImagesByPath">
+      <soap:operation soapAction="" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+
+    <wsdl:operation name="linnLiveCreateProductImagesByUrl">
       <soap:operation soapAction="" />
       <wsdl:input>
         <soap:body use="literal" />

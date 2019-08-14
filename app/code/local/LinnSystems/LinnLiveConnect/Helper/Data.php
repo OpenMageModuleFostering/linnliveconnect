@@ -36,6 +36,7 @@ class LinnSystems_LinnLiveConnect_Helper_Data extends Mage_Core_Helper_Abstract
 
 
     public function convertFiltersToArray($filters) {
+    
         $arrayParams = array(
 			   'nin',
 			   'in',
@@ -69,6 +70,7 @@ class LinnSystems_LinnLiveConnect_Helper_Data extends Mage_Core_Helper_Abstract
     }
 
     protected function _log($message) {
+    
         Mage::log(print_r($message, true), null, 'LinnLiveExt.log');
     }
 
@@ -320,12 +322,12 @@ class LinnSystems_LinnLiveConnect_Helper_Data extends Mage_Core_Helper_Abstract
     
     public function createProductData($productData){
 
-        if (property_exists($productData, 'websites') === false) {
-            $defaultStore = $this->getDefaultStore();
-            if($defaultStore){
-                $productData->websites = array($defaultStore->getWebsiteId());
-            }
-        }
+        //if (property_exists($productData, 'websites') === false) {
+        //    $defaultStore = $this->getDefaultStore();
+        //    if($defaultStore){
+        //        $productData->websites = array($defaultStore->getWebsiteId());
+        //    }
+        //}
 
         if (property_exists($productData, 'category_ids') === true) {
             $productData->category_ids = is_array($productData->category_ids) ? $productData->category_ids : array($productData->category_ids);
@@ -364,17 +366,17 @@ class LinnSystems_LinnLiveConnect_Helper_Data extends Mage_Core_Helper_Abstract
             $productData->categories = $productData->category_ids;
         }
 
-        if (property_exists($productData, 'add_to_websites') && $productData->add_to_websites === true)
-        {
-            $currentWebsites = $_loadedProduct->getWebsiteIds();
-            $websiteId = $this->getWebsiteId();
+        //if (property_exists($productData, 'add_to_websites') && $productData->add_to_websites === true)
+        //{
+        //    $currentWebsites = $_loadedProduct->getWebsiteIds();
+        //    $websiteId = $this->getWebsiteId();
 
-            if (in_array($websiteId, $currentWebsites) === false)
-            {
-                $currentWebsites[] = $websiteId;
-                $productData->websites = $currentWebsites;
-            }
-        }         
+        //    if (in_array($websiteId, $currentWebsites) === false)
+        //    {
+        //        $currentWebsites[] = $websiteId;
+        //        $productData->websites = $currentWebsites;
+        //    }
+        //}         
     }
 
     public function flushWsdlCache(){

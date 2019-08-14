@@ -70,6 +70,14 @@
             <title>Bulk create product images</title>
             <acl>linnLive/createProductImages</acl>
           </createProductImages>
+          <createProductImagesByPath translate="title" module="linnLiveConnect">
+            <title>Bulk create product images by path</title>
+            <acl>linnLive/createProductImagesByPath</acl>
+          </createProductImagesByPath>
+          <createProductImagesByUrl translate="title" module="linnLiveConnect">
+            <title>Bulk create product images by path</title>
+            <acl>linnLive/createProductImagesByUrl</acl>
+          </createProductImagesByUrl>
           <updateProductImages translate="title" module="linnLiveConnect">
             <title>Bulk update product images</title>
             <acl>linnLive/updateProductImages</acl>
@@ -226,6 +234,12 @@
           <createProductImages translate="title" module="linnLiveConnect">
             <title>Bulk create product images</title>
           </createProductImages>
+          <createProductImagesByPath translate="title" module="linnLiveConnect">
+            <title>Bulk create product images</title>
+          </createProductImagesByPath>
+          <createProductImagesByUrl translate="title" module="linnLiveConnect">
+            <title>Bulk create product images</title>
+          </createProductImagesByUrl>          
           <updateProductImages translate="title" module="linnLiveConnect">
             <title>Bulk update product images</title>
           </updateProductImages>
