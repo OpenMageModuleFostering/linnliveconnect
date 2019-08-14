@@ -1,6 +1,6 @@
 <?php
 class Settings {
-    const VERSION = 48;
+    const VERSION = 49;
 }
 
 class LinnSystems_LinnLiveConnect_Model_Api_V2 {
@@ -957,7 +957,7 @@ class LinnLiveMain extends Mage_Core_Model_Abstract {
 
         $result = array(
             'llc_ver' => Settings::VERSION,
-            'magento_ver' => $verInfo,
+            'magento_ver' => trim("{$verInfo['major']}.{$verInfo['minor']}.{$verInfo['revision']}" . ($verInfo['patch'] != '' ? ".{$verInfo['patch']}" : ""). "-{$verInfo['stability']}{$verInfo['number']}", '.-'),
             'php_ver' => phpversion(),
             'api_config' => $config
         );
@@ -968,25 +968,6 @@ class LinnLiveMain extends Mage_Core_Model_Abstract {
      
     public function storesList()
     {
-        $config = Mage::getStoreConfig("api/config");
-        
-        
-        //config/stores_admin/api/config
-        $verInfo = Mage::getVersionInfo();
-
-        
-        
-        $result = array(
-            'llc_ver' => Settings::VERSION,
-            'magento_ver' => trim("{$verInfo['major']}.{$verInfo['minor']}.{$verInfo['revision']}" . ($verInfo['patch'] != '' ? ".{$verInfo['patch']}" : ""). "-{$verInfo['stability']}{$verInfo['number']}", '.-'),
-            'php_ver' => phpversion(),
-            'api_config'=> $config
-        );
-        //['config']['stores_admin']['api']['config']
-$this->_log($result);
-        return $result;    
-    
-    
         return ($this->_getCurrentVersion() >= 160);
     }
 

@@ -11,7 +11,10 @@
       <!-- Get general version-->
       <xsd:complexType name="linnLiveGetGeneralInfoApiConfigResponseDataArray">
         <xsd:sequence>
-          <xsd:element minOccurs="0" maxOccurs="unbounded" name="complexObjectArray" type="typens:linnLiveGetGeneralInfoApiConfigResponseDataEntity" />
+          <xsd:element minOccurs="1" maxOccurs="1" name="llc_ver" type="xsd:string" />
+          <xsd:element minOccurs="1" maxOccurs="1" name="magento_ver" type="xsd:string" />
+          <xsd:element minOccurs="1" maxOccurs="1" name="php_ver" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="api_config" type="typens:linnLiveGetGeneralInfoApiConfigResponseDataEntity" />
         </xsd:sequence>
       </xsd:complexType>
 
@@ -485,10 +488,7 @@
       <xsd:element name="linnLiveGetGeneralInfoResponseParam">
         <xsd:complexType>
           <xsd:sequence>
-            <xsd:element minOccurs="1" maxOccurs="1" name="llc_ver" type="xsd:string" />
-            <xsd:element minOccurs="1" maxOccurs="1" name="magento_ver" type="xsd:string" />
-            <xsd:element minOccurs="1" maxOccurs="1" name="php_ver" type="xsd:string" />
-            <xsd:element minOccurs="1" maxOccurs="1" name="api_config" type="typens:linnLiveGetGeneralInfoApiConfigResponseDataArray" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="result" type="typens:linnLiveGetGeneralInfoApiConfigResponseDataArray" />
           </xsd:sequence>
         </xsd:complexType>
       </xsd:element>       
