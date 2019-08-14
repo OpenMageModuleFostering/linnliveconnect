@@ -169,70 +169,66 @@ class LinnSystems_LinnLiveConnect_Helper_Data extends Mage_Core_Helper_Abstract
 
     public function createOptions($newOptions)
     {
+        $cache = Mage::app()->getCache();
         $installer = new Mage_Eav_Model_Entity_Setup('core_setup');
         $attributeApi = Mage::getModel('catalog/product_attribute_api');
         $helperCatalog = Mage::helper('catalog');
 
         $installer->startSetup();
-
         $attributesList = array();
 
         foreach($newOptions as $attribute_id=>$options)
         {
-            $aOption = array();
-            $aOption['attribute_id'] = $attribute_id;
+            $newOption = array();
+            $newOption['attribute_id'] = $attribute_id;
             $attributesList[] = $attribute_id;
+            $newOption['value'] = array();
 
-            $i=0;
-            foreach($options as $option)
-            {
-                $optionTitle = $helperCatalog->stripTags($option);
-
-                $aOption['value']['option'.$i][0] = $optionTitle;
-                $i++;
+            for($i = 0; $i< sizeof($options); $i++) {
+                $label = $helperCatalog->stripTags($options[$i]);
+                $cachedValue = $cache->load($attribute_id.'_'.strtolower($label));
+                if($cachedValue != 1){
+                    $newOption['value']['option'.$i][0] = $label;
+                    $cache->save("1",$attribute_id.'_'.strtolower($label), array('LINNLIVE_EXTENSION_ATTRIBUTES'), 300);
+                }
             }
-            $installer->addAttributeOption($aOption);
+            if(sizeof($newOption['value'])){
+                $installer->addAttributeOption($newOption);
+            }
         }
         $installer->endSetup();
 
         Mage::app()->cleanCache(array(Mage_Core_Model_Translate::CACHE_TAG));
 
-
         $currentOptions = array();
+        
+        
         $attributeApi = Mage::getModel('catalog/product_attribute_api');
+        
         foreach($attributesList as $attribute_id)
         {
-            if (!isset($currentOptions[$attribute_id])){
-                $currentOptions[$attribute_id] = array();
-            }
-
-            try{
-                $attributeOptions = $attributeApi->options($attribute_id);
-            }catch(Exception $ex){
-                throw new Mage_Api_Exception('attribute_not_exists', $attribute_id);
-            }
-
-            foreach ($attributeOptions as $opts)
-            {
-          
-                $label = strtolower($opts['label']);
-                $optionId = $opts['value'];
-                if (!isset($currentOptions[$attribute_id][$label]))
+            $attribute = Mage::getModel('eav/config')->getAttribute('catalog_product',$attribute_id);
+        
+            foreach ( $attribute->getSource()->getAllOptions(true, true) as $option ){
+            
+                $label = strtolower($option['label']);
+                $optionId = $option['value'];
+                if (!isset($currentOptions[$attribute_id][$label])){
                     $currentOptions[$attribute_id][$label] = $optionId;
-                else {
-                    $oldId = $currentOptions[$attribute_id][$label];
-                    if ($oldId > $optionId)
-                    {
-                        $attributeApi->removeOption($attribute_id, $oldId);
-                        $currentOptions[$attribute_id][$label] = $optionId;
-                    }
-                    else
-                    {
-                        $attributeApi->removeOption($attribute_id, $optionId);
-                    }
+                } 
+                
+                $currentOptionId = $currentOptions[$attribute_id][$label];
+                if ($optionId > $currentOptionId){
+                    $attributeApi->removeOption($attribute_id, $optionId);
+                }
+
+                if ($currentOptionId > $optionId)
+                {    
+                    $attributeApi->removeOption($attribute_id, $currentOptionId);
+                    $currentOptions[$attribute_id][$label] = $optionId;
                 }
             }
-        }
+         }
 
         return $currentOptions;
     }
@@ -285,12 +281,12 @@ class LinnSystems_LinnLiveConnect_Helper_Data extends Mage_Core_Helper_Abstract
                         if (isset($_availableOptions[$option->attribute_id]) && isset($_availableOptions[$option->attribute_id][strtolower($option->label)]))
                         {
                             $newAttribute->value = $_availableOptions[$option->attribute_id][strtolower($option->label)];
-                        }  
+                        }
                         
                         $additional_attributes->single_data[] = $newAttribute;    
                     }
                 }
-                
+                               
                 foreach($multiAttributes as $key=>$data){
                     $additional_attributes->single_data[] = $data;
                 }               
@@ -304,7 +300,6 @@ class LinnSystems_LinnLiveConnect_Helper_Data extends Mage_Core_Helper_Abstract
             {
                 unset($productData->additional_attributes);
             }
-            
         }
         return $productData;
     }

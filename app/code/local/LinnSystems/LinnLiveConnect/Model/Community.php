@@ -213,11 +213,12 @@ class LinnSystems_LinnLiveConnect_Model_Community extends LinnSystems_LinnLiveCo
 	}
 
 	/**
-	 * Get store code
+	 * Get store code and reset attribute cache
 	 *
 	 * @return string
 	 */
 	public function getStoreCode($store = null) {
+        Mage::app()->cleanCache(array('LINNLIVE_EXTENSION_ATTRIBUTES'));
 		$helper = Mage::helper('linnLiveConnect');
 		return $helper -> currentStoreCode($store);
 	}

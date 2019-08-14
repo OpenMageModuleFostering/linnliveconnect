@@ -6,7 +6,7 @@ class LinnSystems_LinnLiveConnect_Model_Main extends Mage_Core_Model_Abstract {
 	protected $_permittedAttributes = array('select', 'multiselect', 'text', 'textarea', 'date', 'price');
 
 	protected function _prepareConfigurableData($productsSet, $attributesSet, $productId, $isUpdate) {
-    
+
 		$helper = Mage::helper('linnLiveConnect');
 
 		$assignedProductsArray = $helper -> objectToArray($this -> _createProductsData($productsSet));
