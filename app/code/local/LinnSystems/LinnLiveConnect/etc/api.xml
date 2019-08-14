@@ -60,6 +60,60 @@
             <title>Get information about current magento settings</title>
             <acl>linnLive/getGeneralInfo</acl>
           </getGeneralInfo>
+          <checkProducts translate="title" module="linnLiveConnect">
+            <title>Check product sku</title>
+            <acl>linnLive/checkProducts</acl>
+          </checkProducts>
+          <createSimpleProducts translate="title" module="linnLiveConnect">
+            <title>Bulk create products</title>
+            <acl>linnLive/createSimpleProducts</acl>
+          </createSimpleProducts>
+          <createConfigurableProducts translate="title" module="linnLiveConnect">
+            <title>Bulk create configurable products</title>
+            <acl>linnLive/createConfigurableProducts</acl>
+          </createConfigurableProducts>
+          <updateSimpleProducts translate="title" module="linnLiveConnect">
+            <title>Bulk update products</title>
+            <acl>linnLive/updateSimpleProducts</acl>
+          </updateSimpleProducts>
+          <updateConfigurableProducts translate="title" module="linnLiveConnect">
+            <title>Bulk update configurable products</title>
+            <acl>linnLive/updateConfigurableProducts</acl>
+          </updateConfigurableProducts>
+          <deleteProducts translate="title" module="linnLiveConnect">
+            <title>Bulk delete products</title>
+            <acl>linnLive/deleteProducts</acl>
+          </deleteProducts>
+
+          <createRelatedProducts translate="title" module="linnLiveConnect">
+            <title>Bulk create related products</title>
+            <acl>linnLive/createRelatedProducts</acl>
+          </createRelatedProducts>
+          <deleteRelatedProducts translate="title" module="linnLiveConnect">
+            <title>Bulk delete related products</title>
+            <acl>linnLive/deleteRelatedProducts</acl>
+          </deleteRelatedProducts>
+          <createProductImages translate="title" module="linnLiveConnect">
+            <title>Bulk create product images</title>
+            <acl>linnLive/createProductImages</acl>
+          </createProductImages>
+          <updateProductImages translate="title" module="linnLiveConnect">
+            <title>Bulk update product images</title>
+            <acl>linnLive/updateProductImages</acl>
+          </updateProductImages>
+          <deleteProductImages translate="title" module="linnLiveConnect">
+            <title>Bulk delete product images</title>
+            <acl>linnLive/deleteProductImages</acl>
+          </deleteProductImages>
+          <disableIndexing translate="title" module="linnLiveConnect">
+            <title>Set manual indexing mode</title>
+            <acl>linnLive/disableIndexing</acl>
+          </disableIndexing>
+          <restoreIndexingById translate="title" module="linnLiveConnect">
+            <title>Restore indexing mode</title>
+            <acl>linnLive/restoreIndexingById</acl>
+          </restoreIndexingById>
+
         </methods>
 
         <faults module="linnLiveConnect">
@@ -119,6 +173,10 @@
             <code>113</code>
             <message>Invalid attributes provided to Magento extension for creating Variation / Product with options. Check attributes/variations in LinnLive Magento configurator if they do exist/match the ones on the back-end.</message>
           </invalid_variation_attribute>
+          <image_not_exists>
+            <code>114</code>
+            <message>Image not found, it might have been deleted from Magento.</message>
+          </image_not_exists>
         </faults>
       </linnLive>
     </resources>
@@ -171,6 +229,46 @@
           <getGeneralInfo translate="title" module="linnLiveConnect">
             <title>Get information about current magento settings</title>
           </getGeneralInfo>
+          <checkProducts translate="title" module="linnLiveConnect">
+            <title>Check product sku</title>
+          </checkProducts>
+          <createSimpleProducts translate="title" module="linnLiveConnect">
+            <title>Bulk create products</title>
+          </createSimpleProducts>
+          <createConfigurableProducts translate="title" module="linnLiveConnect">
+            <title>Bulk create configurable products</title>
+          </createConfigurableProducts>
+          <updateSimpleProducts translate="title" module="linnLiveConnect">
+            <title>Bulk update products</title>
+          </updateSimpleProducts>
+          <updateConfigurableProducts translate="title" module="linnLiveConnect">
+            <title>Bulk update configurable products</title>
+          </updateConfigurableProducts>
+          <deleteProducts translate="title" module="linnLiveConnect">
+            <title>Bulk delete products</title>
+          </deleteProducts>
+          <createRelatedProducts translate="title" module="linnLiveConnect">
+            <title>Bulk create related products</title>
+          </createRelatedProducts>
+          <deleteRelatedProducts translate="title" module="linnLiveConnect">
+            <title>Bulk delete related products</title>
+          </deleteRelatedProducts>
+          <createProductImages translate="title" module="linnLiveConnect">
+            <title>Bulk create product images</title>
+          </createProductImages>
+          <updateProductImages translate="title" module="linnLiveConnect">
+            <title>Bulk update product images</title>
+          </updateProductImages>
+          <deleteProductImages translate="title" module="linnLiveConnect">
+            <title>Bulk delete product images</title>
+          </deleteProductImages>
+          <disableIndexing translate="title" module="linnLiveConnect">
+            <title>Set manual indexing mode</title>
+          </disableIndexing>
+          <restoreIndexingById translate="title" module="linnLiveConnect">
+            <title>Restore indexing mode</title>
+          </restoreIndexingById>
+
         </linnLive>
       </resources>
     </acl>
