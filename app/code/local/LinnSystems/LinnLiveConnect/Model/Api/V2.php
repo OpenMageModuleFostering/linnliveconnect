@@ -1,6 +1,6 @@
 <?php
 class Settings {
-    const VERSION = 43;
+    const VERSION = 44;
 }
 
 class LinnSystems_LinnLiveConnect_Model_Api_V2{
@@ -704,7 +704,45 @@ class LinnLiveMain extends Mage_Core_Model_Abstract{
         return $productData;
     }
 
+    /*
+     * Helper for productList
+     */    
+    private function _convertFiltersToArray($filters){
+        $arrayParams = array(
+            'nin',
+            'in',
+        );
 
+        $preparedFilters = array();
+        
+        if (isset($filters->filter)) {
+            $preparedFilters = $filters->filter;
+        } 
+        
+        if (isset($filters->complex_filter)) {
+  
+            foreach ($filters->complex_filter as $idx=>$data) {                     
+                if(is_object($data->value)){
+                    //1.8
+                    $field = $data->key;
+                    $opts = $data->value;  
+                    
+                }else{
+                    //1.7              
+                    $field = $idx;
+                    $opts = $data;  
+                }                   
+                    
+                $value = (in_array($opts->key, $arrayParams)) ? explode(',', $opts->value) : $opts->value;           
+                $preparedFilters[$field][$opts->key] = $value;    
+            }
+        }
+        return $preparedFilters;
+    }    
+
+    private function _log($message){
+        Mage::log(print_r($message, true));
+    }
 
     /*
      *
@@ -760,15 +798,6 @@ class LinnLiveMain extends Mage_Core_Model_Abstract{
         catch (Mage_Core_Model_Store_Exception $e) {
             throw new Mage_Api_Exception('store_not_exists', null);
         }
-        /*
-        if ($identifierType == 'id')
-        {
-        $productId = intval($productId);
-
-        if ($productId < 1) {
-        throw new Mage_Api_Exception('product_not_exists', null);
-        }
-        }*/
 
         $_loadedProduct = Mage::helper('catalog/product')->getProduct($productId, $storeId, $identifierType);
 
@@ -787,7 +816,6 @@ class LinnLiveMain extends Mage_Core_Model_Abstract{
             }
 
             $productData->category_ids = array_merge($_categoryIds, $productData->category_ids);
-
         }
         else
         {
@@ -943,6 +971,9 @@ class LinnLiveMain extends Mage_Core_Model_Abstract{
         return true;
     }
 
+    
+
+    
     /*
      * Implementation of catalogProductList because of bug in associativeArray.
      * Extended to filter by category id too.
@@ -951,101 +982,72 @@ class LinnLiveMain extends Mage_Core_Model_Abstract{
      * 'type_id' instead of product type.
      */
     public function productList($page, $perPage, $filters = null, $store = null)
-    {
-        $arrayParams = array(
-            'nin',
-            'in',
-        );
-
-        $store = $this->_currentStoreCode($store);
-
+    {    
+        //get store
         try {
-            $storeId = Mage::app()->getStore($store)->getId();
+            $storeId = Mage::app()->getStore( $this->_currentStoreCode($store) )->getId();
         }
         catch (Mage_Core_Model_Store_Exception $e) {
             throw new Mage_Api_Exception('store_not_exists', null);
         }
-
-        $preparedFilters = array();
-        if (isset($filters->filter)) {
-            foreach ($filters->filter as $_key => $_value) {
-                $preparedFilters[$_key] = $_value;
-            }
+        
+        //prepare and convert filters to array
+        $preparedFilters = $this->_convertFiltersToArray($filters);       
+        if (empty($preparedFilters)) {
+            throw new Mage_Api_Exception('filters_invalid', 'Filters not found');
         }
-        if (isset($filters->complex_filter)) {
-            foreach ($filters->complex_filter as $_key => $_filter) {
-                $_op = $_filter->key;
-                $_filterVal = $_filter->value->value;
-                $_filterKey = $_filter->value->key;
-
-                if (in_array($_op, $arrayParams))	{
-                    $values = explode(',', $_filterVal);
-                }
-                else {
-                    $values = $_filterVal;
-                }
-
-                $preparedFilters[$_op] = array(
-                    $_filterKey => $values
-                );
+        
+        //load collection
+        $collection = Mage::getModel('catalog/product')->getCollection()->addStoreFilter($storeId);
+        
+        //filter collection by category if exists       
+        if (isset($preparedFilters['category']) && is_string($preparedFilters['category']))
+        {               
+            $_category = Mage::getModel('catalog/category')->load(
+                intval($preparedFilters['category'])
+            );
+                
+            if($_category->getId()){
+                $collection = $collection->addCategoryFilter($_category);
             }
-        }
-
-        if (isset($preparedFilters['category']) &&
-            is_string($preparedFilters['category']))
-        {
-            $_categoryId = intval($preparedFilters['category']);
+  
             unset($preparedFilters['category']);
         }
-        else {
-            $_categoryId = 0;
-        }
-
-        if (!empty($preparedFilters)) {
-            if ($_categoryId > 0)
-            {
-                $_category = Mage::getModel('catalog/category')->load($_categoryId);
-                $collection = Mage::getModel('catalog/product')->getCollection()
-                ->addStoreFilter($storeId)
-                ->addCategoryFilter($_category);
-            }
-            else
-            {
-                $collection = Mage::getModel('catalog/product')->getCollection()
-                ->addStoreFilter($storeId);
-            }
-
-            try {
-                foreach ($preparedFilters as $field => $value) {
-                    $collection->addFieldToFilter($field, $value);
-                }
-            }
-            catch (Mage_Core_Exception $e) {
-                throw new Mage_Api_Exception('filters_invalid', $e->getMessage());
+      
+        //add prepared filters to collection
+        try {
+            foreach ($preparedFilters as $field => $value) {
+                $collection->addFieldToFilter($field, $value);
             }
         }
+        catch (Mage_Core_Exception $e) {
+            throw new Mage_Api_Exception('filters_invalid', $e->getMessage());
+        }   
+      
 
         if ($page == 1)
         {
+            //TODO: limit page size
             $count = $collection->count();
         }
         else
         {
-            $collection->setPageSize($perPage)
-                        ->setCurPage($page);
             $count = 0;
-        }
-
-        $result = array();
-        $result['count'] = $count;
-        $result['products'] = array();
-
+            $collection->setPageSize($perPage)->setCurPage($page);
+        }       
+        
+        $result = array(
+            'count'=>$count, 
+            'products'=>array()
+        );
+        
         $_assignedIds = array();
         $_fetchedIds = array();
-
+       
         $i = 0;
-        foreach ($collection as $_product) {
-            if ($i >= ($perPage * $page)) break;
+        foreach ($collection as $_product) {   
+        
+            if ($i >= ($perPage * $page)) break;//TODO remove
             $_loadedProduct = Mage::helper('catalog/product')->getProduct($_product->getId(), $storeId, 'id');
 
             $_allAttributes = $_loadedProduct->getData();
@@ -1074,6 +1076,7 @@ class LinnLiveMain extends Mage_Core_Model_Abstract{
                 'images' 	   => $_productImages,
                 'attributes'   => $_productAttributes,
             );
+            
             if($_loadedProduct->getTypeId() == "configurable")
             {
                 $_typeInstance = $_loadedProduct->getTypeInstance();
