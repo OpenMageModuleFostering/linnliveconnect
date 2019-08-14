@@ -85,8 +85,8 @@ class LinnSystems_LinnLiveConnect_Model_Main extends Mage_Core_Model_Abstract {
     
 		foreach ($assignedProductsArray as $id => $productOptions) {
 			foreach ($productOptions as $index => $option) {
-				if (isset($availableOptions[$option['attribute_id']][strtolower($option['label'])])) {
-					$assignedProductsArray[$id][$index]['value_index'] = $availableOptions[$option['attribute_id']][strtolower($option['label'])];
+				if (isset($availableOptions[$option['attribute_id']][$option['label']])) {
+					$assignedProductsArray[$id][$index]['value_index'] = $availableOptions[$option['attribute_id']][$option['label']];
 				}
 			}
 		}

@@ -211,7 +211,7 @@ class LinnSystems_LinnLiveConnect_Helper_Data extends Mage_Core_Helper_Abstract
         
             foreach ( $attribute->getSource()->getAllOptions(true, true) as $option ){
             
-                $label = strtolower($option['label']);
+                $label = $option['label'];
                 $optionId = $option['value'];
                 if (!isset($currentOptions[$attribute_id][$label])){
                     $currentOptions[$attribute_id][$label] = $optionId;
@@ -265,9 +265,9 @@ class LinnSystems_LinnLiveConnect_Helper_Data extends Mage_Core_Helper_Abstract
 
                         $value = isset($option->value)? $option->value : "";
                         
-                        if (isset($_availableOptions[$option->attribute_id]) && isset($_availableOptions[$option->attribute_id][strtolower($option->label)]))
+                        if (isset($_availableOptions[$option->attribute_id]) && isset($_availableOptions[$option->attribute_id][$option->label]))
                         {
-                            $value = $_availableOptions[$option->attribute_id][strtolower($option->label)];
+                            $value = $_availableOptions[$option->attribute_id][$option->label];
                         }                          
                         
                         array_push($multiAttributes[$option->code]->value, $value);         
@@ -278,9 +278,9 @@ class LinnSystems_LinnLiveConnect_Helper_Data extends Mage_Core_Helper_Abstract
                         $newAttribute->key = $option->code;
                         $newAttribute->value = isset($option->value)? $option->value : "";
                     
-                        if (isset($_availableOptions[$option->attribute_id]) && isset($_availableOptions[$option->attribute_id][strtolower($option->label)]))
+                        if (isset($_availableOptions[$option->attribute_id]) && isset($_availableOptions[$option->attribute_id][$option->label]))
                         {
-                            $newAttribute->value = $_availableOptions[$option->attribute_id][strtolower($option->label)];
+                            $newAttribute->value = $_availableOptions[$option->attribute_id][$option->label];
                         }
                         
                         $additional_attributes->single_data[] = $newAttribute;    
