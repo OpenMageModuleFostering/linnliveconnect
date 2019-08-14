@@ -65,19 +65,19 @@
                     </product_type_not_exists>
                     <product_attribute_set_not_exists>
                         <code>102</code>
-                        <message>Product attribute set is not existed.</message>
+                        <message>Product attribute set is not existed</message>
                     </product_attribute_set_not_exists>
                     <product_attribute_set_not_valid>
                         <code>103</code>
-                        <message>Product attribute set is not belong catalog product entity type.</message>
+                        <message>Product attribute set is not belong catalog product entity type</message>
                     </product_attribute_set_not_valid>
                     <products_not_suitable>
                         <code>104</code>
-                        <message>Product not suitable to be used in configurable product.</message>
+                        <message>Product not suitable to be used in configurable product </message>
                     </products_not_suitable>
                     <configurable_creating_error>
                         <code>105</code>
-                        <message>Configurable product creating error.</message>
+                        <message>Configurable product creating error </message>
                     </configurable_creating_error>
                     <wrong_version>
                         <code>106</code>
@@ -87,33 +87,8 @@ and click on "Check for Upgrades", and upgrade you LinnLiveConnect extension to 
                     </wrong_version>
                     <attribute_not_exists>
                         <code>107</code>
-                        <message>Attribute not found.</message>
+                        <message>Attribute not found</message>
                     </attribute_not_exists>
-                    <product_not_exists>
-                        <code>108</code>
-                        <message>Product not found.</message>
-                    </product_not_exists>
-					<store_not_exists>
-                        <code>109</code>
-                        <message>Store not found.</message>
-					</store_not_exists>
-					<unsupported_edition>
-                        <code>110</code>
-                        <message>Unsupported edition.</message>
-					</unsupported_edition>
-					<filters_invalid>
-                        <code>111</code>
-                        <message>Invalid filters.</message>
-					</filters_invalid>
-					<filters_invalid>
-                        <code>111</code>
-                        <message>Invalid filters.</message>
-					</filters_invalid>
-					<version_not_specified>
-                        <code>112</code>
-                        <message>Version is not specified.</message>
-					</version_not_specified>
-
                </faults>
             </linnLive>
         </resources>
