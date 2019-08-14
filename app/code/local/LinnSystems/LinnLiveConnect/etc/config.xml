@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <modules>
+        <LinnSystems_LinnLiveConnect>
+            <version>1.0.19</version>
+        </LinnSystems_LinnLiveConnect>
+    </modules>
+    <global>
+        <helpers>
+            <linnLiveConnect>
+                <class>LinnSystems_LinnLiveConnect_Helper</class>
+            </linnLiveConnect>
+        </helpers>
+        <models>
+        	<linnLiveConnect>
+                <class>LinnSystems_LinnLiveConnect_Model</class>
+            </linnLiveConnect>	
+        </models>
+    </global>
+</config> 

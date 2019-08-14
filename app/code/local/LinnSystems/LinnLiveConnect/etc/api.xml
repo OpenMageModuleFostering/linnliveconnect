@@ -1,0 +1,172 @@
+<?xml version="1.0"?>
+<config>
+    <api>
+        <resources>
+            <linnLive translate="title" module="linnLiveConnect">
+	            <title>LinnLive connect module</title>
+	            <model>linnLiveConnect/api</model>
+	            <methods>
+	                <configurableProduct translate="title" module="linnLiveConnect">
+	                    <title>Configurable products creation</title>
+	                    <acl>linnLive/configurableCreate</acl>
+	                </configurableProduct>
+	                <updateConfigurableProduct translate="title" module="linnLiveConnect">
+	                    <title>Configurable products creation</title>
+	                    <acl>linnLive/configrableUpdate</acl>
+	                </updateConfigurableProduct>
+	                <createProduct translate="title" module="linnLiveConnect">
+	                    <title>Create product (extended version)</title>
+	                    <method>create</method>
+	                    <acl>linnLive/create</acl>
+	                </createProduct>
+	                <updateProduct translate="title" module="linnLiveConnect">
+	                    <title>Update product (extended version)</title>
+	                    <method>update</method>
+	                    <acl>linnLive/update</acl>
+	                </updateProduct>
+	                <productAttributeOptions translate="title" module="linnLiveConnect">
+	                    <title>Get attributes by attribute Set id</title>
+	                    <acl>linnLive/attributeOptions</acl>
+	                </productAttributeOptions>
+	                <storesList translate="title" module="linnLiveConnect">
+	                    <title>Retreive list of install stores</title>
+	                    <acl>linnLive/storesList</acl>
+	                </storesList>
+                    <getStoreCode translate="title" module="linnLiveConnect">
+                        <title>Get current store code</title>
+                        <acl>linnLive/getStoreCode</acl>
+                    </getStoreCode>
+                    <productList translate="title" module="linnLiveConnect">
+                        <title>Get current store code</title>
+                        <acl>linnLive/productList</acl>
+                    </productList>
+                    <info translate="title" module="linnLiveConnect">
+                        <title>Get information about current magento settings and installation</title>
+                        <method>debugInfo</method>
+                        <acl>linnLive/info</acl>
+                    </info>
+                    <assignImages translate="title" module="linnLiveConnect">
+                        <title>Assigns configurable product images to children products</title>
+                        <acl>linnLive/assignImages</acl>
+                    </assignImages>
+                    <deleteAssigned translate="title" module="linnLiveConnect">
+                        <title>Remove assigned item from inventory</title>
+                        <acl>linnLive/deleteAssigned</acl>
+                    </deleteAssigned>
+	            </methods>
+	            <faults module="linnLiveConnect">
+                    <data_invalid>
+                        <code>100</code>
+                        <message>Invalid data given. Details in error message.</message>
+                    </data_invalid>
+                    <product_type_not_exists>
+                        <code>101</code>
+                        <message>Product type is not in allowed types.</message>
+                    </product_type_not_exists>
+                    <product_attribute_set_not_exists>
+                        <code>102</code>
+                        <message>Product attribute set is not existed.</message>
+                    </product_attribute_set_not_exists>
+                    <product_attribute_set_not_valid>
+                        <code>103</code>
+                        <message>Product attribute set is not belong catalog product entity type.</message>
+                    </product_attribute_set_not_valid>
+                    <products_not_suitable>
+                        <code>104</code>
+                        <message>Product not suitable to be used in configurable product.</message>
+                    </products_not_suitable>
+                    <configurable_creating_error>
+                        <code>105</code>
+                        <message>Configurable product creating error.</message>
+                    </configurable_creating_error>
+                    <wrong_version>
+                        <code>106</code>
+                        <message>Wrong extended API version, please update your LinnLive Magento extension. 
+Go to System->Magento Connect->Magento Connect Manager in your Magento Admin panel,
+and click on "Check for Upgrades", and upgrade you LinnLiveConnect extension to last one.</message>
+                    </wrong_version>
+                    <attribute_not_exists>
+                        <code>107</code>
+                        <message>Attribute not found.</message>
+                    </attribute_not_exists>
+                    <product_not_exists>
+                        <code>108</code>
+                        <message>Product not found.</message>
+                    </product_not_exists>
+					<store_not_exists>
+                        <code>109</code>
+                        <message>Store not found.</message>
+					</store_not_exists>
+					<unsupported_edition>
+                        <code>110</code>
+                        <message>Unsupported edition.</message>
+					</unsupported_edition>
+					<filters_invalid>
+                        <code>111</code>
+                        <message>Invalid filters.</message>
+					</filters_invalid>
+					<filters_invalid>
+                        <code>111</code>
+                        <message>Invalid filters.</message>
+					</filters_invalid>
+					<version_not_specified>
+                        <code>112</code>
+                        <message>Version is not specified.</message>
+					</version_not_specified>
+
+               </faults>
+            </linnLive>
+        </resources>
+        <acl>
+        	<resources>
+            	<linnLive translate="title" module="linnLiveConnect">
+                	<title>LinnLive</title>
+                    <create translate="title" module="linnLiveConnect">
+                    	<title>Product creation (extended)</title>
+                    </create>
+                    <update translate="title" module="linnLiveConnect">
+                    	<title>Product update (extended)</title>
+                    </update>
+                    <attributeOptions translate="title" module="linnLiveConnect">
+                    	<title>Attribute options by set id</title>
+                    </attributeOptions> 
+                    <storesList translate="title" module="linnLiveConnect">
+                    	<title>Get stores list</title>
+                    </storesList>
+                    <createImage translate="title" module="linnLiveConnect">
+                    	<title>Create image</title>
+                    </createImage>
+                    <updateImage translate="title" module="linnLiveConnect">
+                    	<title>Update image</title>
+                    </updateImage>
+                    <getStoreCode translate="title" module="linnLiveConnect">
+                    	<title>get current store code</title>
+                    </getStoreCode>
+                    <configurableCreate translate="title" module="linnLiveConnect">
+                    	<title>Configurable product creation</title>
+                    </configurableCreate>
+                    <configurableUpdate translate="title" module="linnLiveConnect">
+                    	<title>Configurable product update</title>
+                    </configurableUpdate>
+                    <productList translate="title" module="linnLiveConnect">
+                    	<title>Retrieve products list by filters</title>
+                    </productList>
+                    <info translate="title" module="linnLiveConnect">
+                    	<title>Get information about current magento settings and installation</title>
+                    </info>
+                    <assignImages translate="title" module="linnLiveConnect">
+                    	<title>Assigns configurable product images to children's products</title>
+                    </assignImages>
+                    <deleteAssigned translate="title" module="linnLiveConnect">
+                    	<title>Remove assigned item from inventory</title>
+                    </deleteAssigned>
+            	</linnLive>
+            </resources>
+        </acl>
+        <v2>
+            <resources_function_prefix>
+                <linnLive>linnLive</linnLive>
+            </resources_function_prefix>
+        </v2>
+    </api>
+</config> 

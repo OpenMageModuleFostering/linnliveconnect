@@ -1,0 +1,16 @@
+{
+    "name": "OpenMageModuleFostering/LinnLiveConnect",
+    "type": "magento-module",
+    "license": "GPL-v2",
+    "homepage": "",
+    "description": "Extended SOAP WS-I compliant API to support integration with LinnLive2.",
+    "authors": [
+    {
+        "name": "Albert Andrejev",
+        "email": "albert@linnsystems.com"
+    }
+],
+    "suggest": {
+        "magento-hackathon/magento-composer-installer": "*"
+    }
+}
