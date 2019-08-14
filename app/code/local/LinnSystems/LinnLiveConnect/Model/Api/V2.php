@@ -49,7 +49,7 @@ class Mage_Catalog_Model_Product_Api_V2_LL extends Mage_Catalog_Model_Product_Ap
                     $retry = true;
                     sleep(1);
                 }else{
-                    throw $e->getMessage();
+                    throw $e;
                 }
                 $tries++;
             }
@@ -998,12 +998,7 @@ class LinnLiveMain extends Mage_Core_Model_Abstract {
         list($assignedProductsArray, $attributesSetArray) = $this->_prepareConfigurableData($productsSet, $attributesSet, true);            
         return $this->_updateConfigurable($store, $productId, $assignedProductsArray, $attributesSetArray, $identifierType, true, $reindex);
     }
-
-    /*
-     *   Checks if this Magento server has valid Extension installed
-     */
-     
-     //http://magento18.ixander.eu/api/v2_soap
+  
     public function getGeneralInfo(){
         $config = Mage::getStoreConfig("api/config");
         $verInfo = Mage::getVersionInfo();
@@ -1017,8 +1012,7 @@ class LinnLiveMain extends Mage_Core_Model_Abstract {
 
         return $result;    
     }
-     
-     
+       
     public function storesList()
     {
         return ($this->_getCurrentVersion() >= 160);
@@ -1071,7 +1065,6 @@ class LinnLiveMain extends Mage_Core_Model_Abstract {
 
         return true;
     }
-
 
     public function assignImages($productImages)
     {
@@ -1133,8 +1126,6 @@ class LinnLiveMain extends Mage_Core_Model_Abstract {
     }
 
 
-
-
     /*
      * Implementation of catalogProductList because of bug in associativeArray.
      * Extended to filter by category id too.
@@ -1175,8 +1166,14 @@ class LinnLiveMain extends Mage_Core_Model_Abstract {
 
         //add prepared filters to collection
         try {
-            foreach ($preparedFilters as $field => $value) {
-                $collection->addFieldToFilter($field, $value);
+            foreach ($preparedFilters as $field => $data) {
+                if(is_array($data)){
+                    foreach ($data as $key => $value){
+                        $collection->addFieldToFilter($field, array($key=>$value));
+                    }                   
+                }else{
+                    $collection->addFieldToFilter($field, $data);
+                }
             }
         }
         catch (Mage_Core_Exception $e) {
@@ -1202,7 +1199,7 @@ class LinnLiveMain extends Mage_Core_Model_Abstract {
 
         $_assignedIds = array();
         $_fetchedIds = array();
-
+        
         $i = 0;
         foreach ($collection as $_product) {
 

@@ -77,7 +77,7 @@
           </product_attribute_set_not_exists>
           <product_attribute_set_not_valid>
             <code>103</code>
-            <message>roduct attribute set was not added to catalogue.</message>
+            <message>Product attribute set was not added to catalogue.</message>
           </product_attribute_set_not_valid>
           <products_not_suitable>
             <code>104</code>
