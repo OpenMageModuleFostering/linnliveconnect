@@ -435,7 +435,7 @@ class LinnLiveMain extends Mage_Core_Model_Abstract{
 
     private function _updateConfigurableQuantity( & $productData)
     {
-        $this->_updateQuantity($productData);
+        $productData = $this->_updateProperties($productData);
 
         if (!property_exists($productData, 'stock_data'))
         {
@@ -446,13 +446,20 @@ class LinnLiveMain extends Mage_Core_Model_Abstract{
         $productData->stock_data->is_in_stock = 1;
     }
 
-    private function _updateQuantity( & $productData)
+    private function _updateProperties($productData)
     {
+
+        if (property_exists($productData, 'status')){
+            $productData->status = ($productData->status == 1) ? Mage_Catalog_Model_Product_Status::STATUS_ENABLED : Mage_Catalog_Model_Product_Status::STATUS_DISABLED;
+        }
+        
+        
         if (property_exists($productData, 'stock_data') && property_exists($productData->stock_data, 'qty')) {
             $productData->stock_data->qty = intval($productData->stock_data->qty);
             $productData->stock_data->is_in_stock = 1;
             $productData->stock_data->manage_stock = 1;
         }
+        return $productData;
     }
 
     private function _objectToArray( $result )
@@ -1260,7 +1267,7 @@ class LinnLiveMain extends Mage_Core_Model_Abstract{
             }
         }
 
-        $this->_updateQuantity($productData);
+        $productData = $this->_updateProperties($productData);
 
         $productData = $this->_fixAttributes($productData);
 
@@ -1297,7 +1304,7 @@ class LinnLiveMain extends Mage_Core_Model_Abstract{
 
         $productData->categories = $productData->category_ids;
 
-        $this->_updateQuantity($productData);
+        $productData = $this->_updateProperties($productData);
 
         $productData = $this->_fixAttributes($productData);
 
