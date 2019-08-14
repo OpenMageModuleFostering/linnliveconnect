@@ -76,31 +76,6 @@
       </xsd:complexType>
       <!-- END of Enchanced Filters -->
 
-      <xsd:complexType name="linnLiveAssignImagesEntitiesArray">
-        <xsd:sequence>
-          <xsd:element minOccurs="0" maxOccurs="unbounded" name="complexObjectArray" type="typens:linnLiveAssignImagesEntity" />
-        </xsd:sequence>
-      </xsd:complexType>
-      <xsd:complexType name="linnLiveAssignImagesEntity">
-        <xsd:sequence>
-          <xsd:element minOccurs="1" name="image_name" type="xsd:string" />
-          <xsd:element minOccurs="1" name="types" type="typens:ArrayOfString" />
-          <xsd:element minOccurs="0" name="label" type="xsd:string" />
-        </xsd:sequence>
-      </xsd:complexType>
-
-      <xsd:complexType name="linnLiveAssignImagesProductEntitiesArray">
-        <xsd:sequence>
-          <xsd:element minOccurs="0" maxOccurs="unbounded" name="complexObjectArray" type="typens:linnLiveAssignImagesProductEntity" />
-        </xsd:sequence>
-      </xsd:complexType>
-      <xsd:complexType name="linnLiveAssignImagesProductEntity">
-        <xsd:sequence>
-          <xsd:element minOccurs="1" name="product_id" type="xsd:int" />
-          <xsd:element minOccurs="1" name="images" type="typens:linnLiveAssignImagesEntitiesArray" />
-        </xsd:sequence>
-      </xsd:complexType>
-
       <!-- Attribute options enchancement -->
       <xsd:complexType name="linnLiveAttributeOptionsListArray">
         <xsd:sequence>
@@ -526,94 +501,7 @@
         </xsd:sequence>
       </xsd:complexType>
       <!-- Product create date end-->
-      
-      <xsd:element name="linnLiveConfigurableProductRequestParam">
-        <xsd:complexType>
-          <xsd:sequence>
-            <xsd:element minOccurs="1" maxOccurs="1" name="sessionId" type="xsd:string" />
-            <xsd:element minOccurs="1" maxOccurs="1" name="version" type="xsd:int" />
-            <xsd:element minOccurs="1" maxOccurs="1" name="set" type="xsd:string" />
-            <xsd:element minOccurs="1" maxOccurs="1" name="sku" type="xsd:string" />
-            <xsd:element minOccurs="1" maxOccurs="1" name="reindex" type="xsd:boolean" />
-            <xsd:element minOccurs="1" maxOccurs="1" name="productData" type="typens:linnLiveProductCreateEntity" />
-            <xsd:element minOccurs="1" maxOccurs="1" name="productsSet" type="typens:linnLiveConfigurableAssignedProductsArray" />
-            <xsd:element minOccurs="1" maxOccurs="1" name="attributesSet" type="typens:linnLiveConfigurableAssignedAttributesArray" />
-            <xsd:element minOccurs="0" maxOccurs="1" name="store" type="xsd:string" />
-          </xsd:sequence>
-        </xsd:complexType>
-      </xsd:element>
-      <xsd:element name="linnLiveConfigurableProductResponseParam">
-        <xsd:complexType>
-          <xsd:sequence>
-            <xsd:element minOccurs="1" maxOccurs="1" name="result" type="xsd:int" />
-          </xsd:sequence>
-        </xsd:complexType>
-      </xsd:element>
-
-      <xsd:element name="linnLiveUpdateConfigurableProductRequestParam">
-        <xsd:complexType>
-          <xsd:sequence>
-            <xsd:element minOccurs="1" maxOccurs="1" name="sessionId" type="xsd:string" />
-            <xsd:element minOccurs="1" maxOccurs="1" name="version" type="xsd:int" />
-            <xsd:element minOccurs="1" maxOccurs="1" name="productId" type="xsd:string" />
-            <xsd:element minOccurs="1" maxOccurs="1" name="reindex" type="xsd:boolean" />
-            <xsd:element minOccurs="1" maxOccurs="1" name="productData" type="typens:linnLiveProductCreateEntity" />
-            <xsd:element minOccurs="1" maxOccurs="1" name="productsSet" type="typens:linnLiveConfigurableAssignedProductsArray" />
-            <xsd:element minOccurs="1" maxOccurs="1" name="attributesSet" type="typens:linnLiveConfigurableAssignedAttributesArray" />
-            <xsd:element minOccurs="0" maxOccurs="1" name="store" type="xsd:string" />
-            <xsd:element minOccurs="0" maxOccurs="1" name="identifierType" type="xsd:string" />
-          </xsd:sequence>
-        </xsd:complexType>
-      </xsd:element>
-      <xsd:element name="linnLiveUpdateConfigurableProductResponseParam">
-        <xsd:complexType>
-          <xsd:sequence>
-            <xsd:element minOccurs="1" maxOccurs="1" name="result" type="xsd:boolean" />
-          </xsd:sequence>
-        </xsd:complexType>
-      </xsd:element>
-
-      <xsd:element name="linnLiveCreateProductRequestParam">
-        <xsd:complexType>
-          <xsd:sequence>
-            <xsd:element minOccurs="1" maxOccurs="1" name="sessionId" type="xsd:string" />
-            <xsd:element minOccurs="1" maxOccurs="1" name="version" type="xsd:int" />
-            <xsd:element minOccurs="1" maxOccurs="1" name="type" type="xsd:string" />
-            <xsd:element minOccurs="1" maxOccurs="1" name="set" type="xsd:string" />
-            <xsd:element minOccurs="1" maxOccurs="1" name="sku" type="xsd:string" />
-            <xsd:element minOccurs="1" maxOccurs="1" name="productData" type="typens:linnLiveProductCreateEntity" />
-            <xsd:element minOccurs="0" maxOccurs="1" name="store" type="xsd:string" />
-          </xsd:sequence>
-        </xsd:complexType>
-      </xsd:element>
-      <xsd:element name="linnLiveCreateProductResponseParam">
-        <xsd:complexType>
-          <xsd:sequence>
-            <xsd:element minOccurs="1" maxOccurs="1" name="result" type="xsd:int" />
-          </xsd:sequence>
-        </xsd:complexType>
-      </xsd:element>
-
-      <xsd:element name="linnLiveUpdateProductRequestParam">
-        <xsd:complexType>
-          <xsd:sequence>
-            <xsd:element minOccurs="1" maxOccurs="1" name="sessionId" type="xsd:string" />
-            <xsd:element minOccurs="1" maxOccurs="1" name="version" type="xsd:int" />
-            <xsd:element minOccurs="1" maxOccurs="1" name="productId" type="xsd:string" />
-            <xsd:element minOccurs="1" maxOccurs="1" name="productData" type="typens:linnLiveProductCreateEntity" />
-            <xsd:element minOccurs="0" maxOccurs="1" name="store" type="xsd:string" />
-            <xsd:element minOccurs="0" maxOccurs="1" name="identifierType" type="xsd:string" />
-          </xsd:sequence>
-        </xsd:complexType>
-      </xsd:element>
-      <xsd:element name="linnLiveUpdateProductResponseParam">
-        <xsd:complexType>
-          <xsd:sequence>
-            <xsd:element minOccurs="1" maxOccurs="1" name="result" type="xsd:boolean" />
-          </xsd:sequence>
-        </xsd:complexType>
-      </xsd:element>
-
+ 
       <xsd:element name="linnLiveStoresListRequestParam">
         <xsd:complexType>
           <xsd:sequence>
@@ -714,10 +602,7 @@
           </xsd:sequence>
         </xsd:complexType>
       </xsd:element>
-
-      
-      
-      
+    
       <xsd:element name="linnLiveUpdatePriceBulkRequestParam">
         <xsd:complexType>
           <xsd:sequence>
@@ -769,7 +654,6 @@
           </xsd:sequence>
         </xsd:complexType>
       </xsd:element>
-
 
       <xsd:element name="linnLiveCheckProductsRequestParam">
         <xsd:complexType>
@@ -960,8 +844,6 @@
           </xsd:sequence>
         </xsd:complexType>
       </xsd:element>      
-    
-      
 
       <xsd:element name="linnLiveProductListRequestParam">
         <xsd:complexType>
@@ -982,42 +864,6 @@
           </xsd:sequence>
         </xsd:complexType>
       </xsd:element>
-
-      <xsd:element name="linnLiveAssignImagesRequestParam">
-        <xsd:complexType>
-          <xsd:sequence>
-            <xsd:element minOccurs="1" maxOccurs="1" name="sessionId" type="xsd:string" />
-            <xsd:element minOccurs="1" maxOccurs="1" name="version" type="xsd:int" />
-            <xsd:element minOccurs="1" maxOccurs="1" name="productImages" type="typens:linnLiveAssignImagesProductEntitiesArray" />
-          </xsd:sequence>
-        </xsd:complexType>
-      </xsd:element>
-      <xsd:element name="linnLiveAssignImagesResponseParam">
-        <xsd:complexType>
-          <xsd:sequence>
-            <xsd:element minOccurs="1" maxOccurs="1" name="result" type="xsd:boolean" />
-          </xsd:sequence>
-        </xsd:complexType>
-      </xsd:element>
-
-      <xsd:element name="linnLiveDeleteAssignedRequestParam">
-        <xsd:complexType>
-          <xsd:sequence>
-            <xsd:element minOccurs="1" maxOccurs="1" name="sessionId" type="xsd:string" />
-            <xsd:element minOccurs="1" maxOccurs="1" name="version" type="xsd:int" />
-            <xsd:element minOccurs="1" maxOccurs="1" name="productId" type="xsd:string" />
-            <xsd:element minOccurs="0" maxOccurs="1" name="store" type="xsd:string" />
-            <xsd:element minOccurs="0" maxOccurs="1" name="identifierType" type="xsd:string" />
-          </xsd:sequence>
-        </xsd:complexType>
-      </xsd:element>
-      <xsd:element name="linnLiveDeleteAssignedResponseParam">
-        <xsd:complexType>
-          <xsd:sequence>
-            <xsd:element minOccurs="1" maxOccurs="1" name="result" type="xsd:boolean" />
-          </xsd:sequence>
-        </xsd:complexType>
-      </xsd:element>
     
   </xsd:schema>
   </wsdl:types>
@@ -1030,34 +876,6 @@
     <wsdl:part name="parameters" element="typens:linnLiveAttributesOptionsRequestParam" />
   </wsdl:message>
   <!-- Attribute options enchancement end -->
-
-  <wsdl:message name="linnLiveConfigurableProductRequest">
-    <wsdl:part name="parameters" element="typens:linnLiveConfigurableProductRequestParam" />
-  </wsdl:message>
-  <wsdl:message name="linnLiveConfigurableProductResponse">
-    <wsdl:part name="parameters" element="typens:linnLiveConfigurableProductResponseParam" />
-  </wsdl:message>
-
-  <wsdl:message name="linnLiveUpdateConfigurableProductRequest">
-    <wsdl:part name="parameters" element="typens:linnLiveUpdateConfigurableProductRequestParam" />
-  </wsdl:message>
-  <wsdl:message name="linnLiveUpdateConfigurableProductResponse">
-    <wsdl:part name="parameters" element="typens:linnLiveUpdateConfigurableProductResponseParam" />
-  </wsdl:message>
-
-  <wsdl:message name="linnLiveCreateProductRequest">
-    <wsdl:part name="parameters" element="typens:linnLiveCreateProductRequestParam" />
-  </wsdl:message>
-  <wsdl:message name="linnLiveCreateProductResponse">
-    <wsdl:part name="parameters" element="typens:linnLiveCreateProductResponseParam" />
-  </wsdl:message>
-
-  <wsdl:message name="linnLiveUpdateProductRequest">
-    <wsdl:part name="parameters" element="typens:linnLiveUpdateProductRequestParam" />
-  </wsdl:message>
-  <wsdl:message name="linnLiveUpdateProductResponse">
-    <wsdl:part name="parameters" element="typens:linnLiveUpdateProductResponseParam" />
-  </wsdl:message>
 
   <wsdl:message name="linnLiveStoresListRequest">
     <wsdl:part name="parameters" element="typens:linnLiveStoresListRequestParam" />
@@ -1087,7 +905,6 @@
     <wsdl:part name="parameters" element="typens:linnLiveGetProductStoreURLResponseParam" />
   </wsdl:message>
 
-
   <wsdl:message name="linnLiveDisableIndexingRequest">
     <wsdl:part name="parameters" element="typens:linnLiveDisableIndexingRequestParam" />
   </wsdl:message>
@@ -1108,8 +925,6 @@
   <wsdl:message name="linnLiveUpdatePriceBulkResponse">
     <wsdl:part name="parameters" element="typens:linnLiveUpdatePriceBulkResponseParam" />
   </wsdl:message>
-
-  
 
   <wsdl:message name="linnLiveCheckProductsRequest">
     <wsdl:part name="parameters" element="typens:linnLiveCheckProductsRequestParam" />
@@ -1188,8 +1003,6 @@
     <wsdl:part name="parameters" element="typens:linnLiveDeleteProductImagesResponseParam" />
   </wsdl:message>
 
-
-
   <wsdl:message name="linnLiveProductListRequest">
     <wsdl:part name="parameters" element="typens:linnLiveProductListRequestParam" />
   </wsdl:message>
@@ -1203,22 +1016,6 @@
   <wsdl:message name="linnLiveInfoResponse">
     <wsdl:part name="parameters" element="typens:linnLiveInfoResponseParam" />
   </wsdl:message>
-
-  <wsdl:message name="linnLiveAssignImagesRequest">
-    <wsdl:part name="parameters" element="typens:linnLiveAssignImagesRequestParam" />
-  </wsdl:message>
-  <wsdl:message name="linnLiveAssignImagesResponse">
-    <wsdl:part name="parameters" element="typens:linnLiveAssignImagesResponseParam" />
-  </wsdl:message>
-
-  <wsdl:message name="linnLiveDeleteAssignedRequest">
-    <wsdl:part name="parameters" element="typens:linnLiveDeleteAssignedRequestParam" />
-  </wsdl:message>
-  <wsdl:message name="linnLiveDeleteAssignedResponse">
-    <wsdl:part name="parameters" element="typens:linnLiveDeleteAssignedResponseParam" />
-  </wsdl:message>
-
-
 
   <!-- Stub parameters for catalogProductAttributeRemove , remove for 1.8 -->
   <wsdl:message name="catalogProductAttributeRemoveRequest">
@@ -1241,30 +1038,6 @@
       <wsdl:output message="typens:linnLiveProductAttributeOptionsResponse" />
     </wsdl:operation>
     <!-- Attribute options enchancement end-->
-
-    <wsdl:operation name="linnLiveConfigurableProduct">
-      <wsdl:documentation>Create configurable product from products list</wsdl:documentation>
-      <wsdl:input message="typens:linnLiveConfigurableProductRequest" />
-      <wsdl:output message="typens:linnLiveConfigurableProductResponse" />
-    </wsdl:operation>
-
-    <wsdl:operation name="linnLiveUpdateConfigurableProduct">
-      <wsdl:documentation>Update configurable product</wsdl:documentation>
-      <wsdl:input message="typens:linnLiveUpdateConfigurableProductRequest" />
-      <wsdl:output message="typens:linnLiveUpdateConfigurableProductResponse" />
-    </wsdl:operation>
-
-    <wsdl:operation name="linnLiveCreateProduct">
-      <wsdl:documentation>Create new product and return product id</wsdl:documentation>
-      <wsdl:input message="typens:linnLiveCreateProductRequest" />
-      <wsdl:output message="typens:linnLiveCreateProductResponse" />
-    </wsdl:operation>
-
-    <wsdl:operation name="linnLiveUpdateProduct">
-      <wsdl:documentation>Update product</wsdl:documentation>
-      <wsdl:input message="typens:linnLiveUpdateProductRequest" />
-      <wsdl:output message="typens:linnLiveUpdateProductResponse" />
-    </wsdl:operation>
 
     <wsdl:operation name="linnLiveStoresList">
       <wsdl:documentation>Retreive installed stores list</wsdl:documentation>
@@ -1394,18 +1167,7 @@
       <wsdl:input message="typens:linnLiveInfoRequest" />
       <wsdl:output message="typens:linnLiveInfoResponse" />
     </wsdl:operation>
-
-    <wsdl:operation name="linnLiveAssignImages">
-      <wsdl:documentation>Assigns configurable product images to childrens products</wsdl:documentation>
-      <wsdl:input message="typens:linnLiveAssignImagesRequest" />
-      <wsdl:output message="typens:linnLiveAssignImagesResponse" />
-    </wsdl:operation>
-
-    <wsdl:operation name="linnLiveDeleteAssigned">
-      <wsdl:documentation>Remove assigned item from inventory</wsdl:documentation>
-      <wsdl:input message="typens:linnLiveDeleteAssignedRequest" />
-      <wsdl:output message="typens:linnLiveDeleteAssignedResponse" />
-    </wsdl:operation>
+    
   </wsdl:portType>
 
   <wsdl:binding name="{{var wsdl.handler}}Binding" type="typens:{{var wsdl.handler}}PortType">
@@ -1422,46 +1184,6 @@
       </wsdl:output>
     </wsdl:operation>
     <!-- Attribute options enchancement end-->
-
-    <wsdl:operation name="linnLiveConfigurableProduct">
-      <soap:operation soapAction="" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-
-    <wsdl:operation name="linnLiveUpdateConfigurableProduct">
-      <soap:operation soapAction="" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-
-    <wsdl:operation name="linnLiveCreateProduct">
-      <soap:operation soapAction="" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-
-    <wsdl:operation name="linnLiveUpdateProduct">
-      <soap:operation soapAction="" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
 
     <wsdl:operation name="linnLiveStoresList">
       <soap:operation soapAction="" />
@@ -1668,26 +1390,6 @@
     </wsdl:operation>
 
     <wsdl:operation name="linnLiveInfo">
-      <soap:operation soapAction="" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-
-    <wsdl:operation name="linnLiveAssignImages">
-      <soap:operation soapAction="" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-
-    <wsdl:operation name="linnLiveDeleteAssigned">
       <soap:operation soapAction="" />
       <wsdl:input>
         <soap:body use="literal" />

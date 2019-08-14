@@ -6,24 +6,6 @@
         <title>LinnLive connect module</title>
         <model>linnLiveConnect/api</model>
         <methods>
-          <configurableProduct translate="title" module="linnLiveConnect">
-            <title>Create configurable product</title>
-            <acl>linnLive/configurableCreate</acl>
-          </configurableProduct>
-          <updateConfigurableProduct translate="title" module="linnLiveConnect">
-            <title>Update configurable product</title>
-            <acl>linnLive/configrableUpdate</acl>
-          </updateConfigurableProduct>
-          <createProduct translate="title" module="linnLiveConnect">
-            <title>Create product</title>
-            <method>create</method>
-            <acl>linnLive/create</acl>
-          </createProduct>
-          <updateProduct translate="title" module="linnLiveConnect">
-            <title>Update product</title>
-            <method>update</method>
-            <acl>linnLive/update</acl>
-          </updateProduct>
           <productAttributeOptions translate="title" module="linnLiveConnect">
             <title>Get attributes by attribute set ID</title>
             <acl>linnLive/attributeOptions</acl>
@@ -40,14 +22,6 @@
             <title>Retrieve products list by filters</title>
             <acl>linnLive/productList</acl>
           </productList>
-          <assignImages translate="title" module="linnLiveConnect">
-            <title>Assigns configurable product images to child products</title>
-            <acl>linnLive/assignImages</acl>
-          </assignImages>
-          <deleteAssigned translate="title" module="linnLiveConnect">
-            <title>Remove assigned item from inventory</title>
-            <acl>linnLive/deleteAssigned</acl>
-          </deleteAssigned>
           <getProductStoreURL translate="title" module="linnLiveConnect">
             <title>Get product URL from Magento</title>
             <acl>linnLive/getProductStoreURL</acl>
@@ -84,7 +58,6 @@
             <title>Bulk delete products</title>
             <acl>linnLive/deleteProducts</acl>
           </deleteProducts>
-
           <createRelatedProducts translate="title" module="linnLiveConnect">
             <title>Bulk create related products</title>
             <acl>linnLive/createRelatedProducts</acl>
@@ -214,9 +187,6 @@
           <productList translate="title" module="linnLiveConnect">
             <title>Retrieve products list by filters</title>
           </productList>
-          <assignImages translate="title" module="linnLiveConnect">
-            <title>Assigns configurable product images to child products</title>
-          </assignImages>
           <deleteAssigned translate="title" module="linnLiveConnect">
             <title>Remove assigned item from inventory</title>
           </deleteAssigned>
@@ -268,7 +238,6 @@
           <restoreIndexingById translate="title" module="linnLiveConnect">
             <title>Restore indexing mode</title>
           </restoreIndexingById>
-
         </linnLive>
       </resources>
     </acl>

@@ -65,20 +65,6 @@ class LinnSystems_LinnLiveConnect_Model_Api_V2 {
 		return $worker -> createRelatedProducts($data);
 	}
 
-	//obsolete, pls remove
-	public function create($version, $type, $set, $sku, $productData, $store = null) {
-
-		$worker = Factory::createWorker($version);
-		return $worker -> createSimpleProduct($type, $set, $sku, $productData, $store, true);
-	}
-
-	//obsolete, pls remove
-	public function configurableProduct($version, $set, $sku, $reindex, $productData, $productsSet, $attributesSet, $store = null) {
-
-		$worker = Factory::createWorker($version);
-		return $worker -> createConfigurableProduct($set, $sku, $reindex, $productData, $productsSet, $attributesSet, $store);
-	}
-
 	public function createProductImages($version, $data) {
 
 		$worker = Factory::createWorker($version);
@@ -103,24 +89,10 @@ class LinnSystems_LinnLiveConnect_Model_Api_V2 {
 		return $worker -> updateProductImages($data);
 	}
 
-	//obsolete, pls remove
-	public function update($version, $productId, $productData, $store = null, $identifierType = 'id') {
-
-		$worker = Factory::createWorker($version);
-		return $worker -> updateSimpleProduct($productId, $productData, $store, $identifierType);
-	}
-
 	public function updatePriceBulk($version, $data, $store = null, $identifierType = 'id') {
 
 		$worker = Factory::createWorker($version);
 		return $worker -> updateProductPrices($data, $store, $identifierType);
-	}
-
-	//obsolete, pls remove
-	public function updateConfigurableProduct($version, $productId, $reindex, $productData, $productsSet, $attributesSet, $store = null, $identifierType = 'id') {
-
-		$worker = Factory::createWorker($version);
-		return $worker -> updateConfigurableProduct($productId, $reindex, $productData, $productsSet, $attributesSet, $store, $identifierType);
 	}
 
 	public function deleteProducts($version, $data) {
@@ -133,13 +105,6 @@ class LinnSystems_LinnLiveConnect_Model_Api_V2 {
 
 		$worker = Factory::createWorker($version);
 		return $worker -> deleteRelatedProducts($data);
-	}
-
-	//obsolete, pls remove
-	public function deleteAssigned($version, $productId, $store = null, $identifierType = 'id') {
-
-		$worker = Factory::createWorker($version);
-		return $worker -> deleteAssigned($productId, $store, $identifierType);
 	}
 
 	public function deleteProductImages($version, $data) {
@@ -178,13 +143,6 @@ class LinnSystems_LinnLiveConnect_Model_Api_V2 {
 
 		$worker = Factory::createWorker($version);
 		return $worker -> getProductAttributeOptions($setId);
-	}
-
-	//obsolete
-	public function assignImages($version, $productImages) {
-
-		$worker = Factory::createWorker($version);
-		return $worker -> assignImages($productImages);
 	}
 
 	public function storesList($version) {
@@ -375,17 +333,6 @@ class LinnLiveMain extends Mage_Core_Model_Abstract {
 			throw new Mage_Api_Exception('configurable_creating_error', $e -> getMessage());
 		}
 
-		//TODO obsolete
-		//if ($reindex === true) {
-		//    try {
-		//        $indexer = Mage::getSingleton('index/indexer');
-		//        $process = $indexer -> getProcessByCode('catalog_product_price');
-		//        $process -> reindexEverything();
-		//    } catch (Mage_Core_Exception $e) {
-		//        throw new Mage_Api_Exception('configurable_creating_error', $e -> getMessage());
-		//    }
-		//}
-
 		return $result;
 	}
 
@@ -395,24 +342,15 @@ class LinnLiveMain extends Mage_Core_Model_Abstract {
 		if (is_array($productData)) {
 			foreach ($productData as $product) {
 				$assignedProductsData[$product -> product_id] = array();
-				$this -> _fillAssignedProductValues($product, $assignedProductsData);
+                if (is_array($product -> values)) {
+                    foreach ($product->values as $productValue) {
+                        $assignedProductsData[$product -> product_id][] = $productValue;
+                    }
+                }               
 			}
-		} else {
-			$assignedProductsData[$productData -> product_id] = array();
-			$this -> _fillAssignedProductValues($product, $assignedProductsData);
 		}
 
 		return $assignedProductsData;
-	}
-
-	protected function _fillAssignedProductValues(&$product, &$assignedProductsData) {
-		if (is_array($product -> values)) {
-			foreach ($product->values as $productValue) {
-				$assignedProductsData[$product -> product_id][] = $productValue;
-			}
-		} else {
-			$assignedProductsData[$product -> product_id][] = $product -> values;
-		}
 	}
 
 	protected function _getCurrentVersion() {
@@ -557,94 +495,6 @@ class LinnLiveCommunity extends LinnLiveMain {
 	//obsolete
 	public function storesList() {
 		return ($this -> _getCurrentVersion() >= 160);
-	}
-
-	//obsolete
-	public function deleteAssigned($productId, $store = null, $identifierType = 'id') {
-		$helper = Mage::helper('linnLiveConnect');
-		$store = $helper -> currentStoreCode($store);
-
-		try {
-			$storeId = Mage::app() -> getStore($store) -> getId();
-		} catch (Mage_Core_Model_Store_Exception $e) {
-			throw new Mage_Api_Exception('store_not_exists', null);
-		}
-
-		$_loadedProduct = Mage::helper('catalog/product') -> getProduct($productId, $storeId, $identifierType);
-
-		if (!$_loadedProduct -> getId()) {
-			throw new Mage_Api_Exception('product_not_exists', null);
-		}
-
-		$currentWebsites = $_loadedProduct -> getWebsiteIds();
-		$websiteId = $helper -> getWebsiteId($store);
-
-		$newWebsiteIds = array();
-
-		if (in_array($websiteId, $currentWebsites) === true) {
-			for ($i = 0; $i < count($currentWebsites); $i++) {
-				if ($currentWebsites[$i] != $websiteId) {
-					$newWebsiteIds[] = $currentWebsites[$i];
-				}
-			}
-
-			$_loadedProduct -> setWebsiteIds($newWebsiteIds);
-
-			$_loadedProduct -> save();
-		}
-
-		return true;
-	}
-
-	//obsolete
-	public function assignImages($productImages) {
-		$helper = Mage::helper('linnLiveConnect');
-		$store = $helper -> currentStoreCode(null);
-
-		foreach ($productImages as $imageData) {
-			$productId = intval($imageData -> product_id);
-			if ($productId < 1) {
-				throw new Mage_Api_Exception('product_not_exists', null);
-			}
-
-			$product = Mage::helper('catalog/product') -> getProduct($productId, $store, 'id');
-
-			$images = $imageData -> images;
-
-			$baseImageExist = false;
-			foreach ($images as $image) {
-				if (is_array($image -> types) && in_array('image', $image -> types)) {
-					$baseImageExist = true;
-				}
-			}
-
-			if ($baseImageExist == false && count($images) > 0) {
-				$images[0] -> types = array('image');
-			}
-
-			reset($images);
-
-			foreach ($images as $image) {
-				$catalogProductDir = Mage::getBaseDir('media') . DS . 'catalog/product';
-				$filePath = $catalogProductDir . $image -> image_name;
-
-				if (is_array($image -> types) && count($image -> types) > 0) {
-					$imageTypes = $image -> types;
-				} else {
-					$imageTypes = "";
-				}
-
-				try {
-					$product -> addImageToMediaGallery($filePath, $imageTypes, false, false);
-				} catch (Exception $e) {
-				}
-
-			}
-
-			$product -> save();
-		}
-
-		return true;
 	}
 
 	/**
@@ -834,7 +684,7 @@ class LinnLiveCommunity extends LinnLiveMain {
 		$config = Mage::getStoreConfig("api/config");
 		$verInfo = Mage::getVersionInfo();
 
-		$result = array('llc_ver' => Mage::helper('linnLiveConnect/settings') -> getVersion(), 'magento_ver' => trim("{$verInfo['major']}.{$verInfo['minor']}.{$verInfo['revision']}" . ($verInfo['patch'] != '' ? ".{$verInfo['patch']}" : "") . "-{$verInfo['stability']}{$verInfo['number']}", '.-'), 'php_ver' => phpversion(), 'api_config' => $config, 'compilation_enabled' => (bool)(defined('COMPILER_INCLUDE_PATH') && defined('COMPILER_COLLECT_PATH')), 'max_upload_size' => min((int)ini_get("upload_max_filesize"), (int)ini_get("post_max_size"), (int)ini_get("memory_limit")));
+		$result = array('llc_ver' => Mage::helper('linnLiveConnect/settings') -> getVersion(), 'magento_ver' => trim("{$verInfo['major']}.{$verInfo['minor']}.{$verInfo['revision']}" . ($verInfo['patch'] != '' ? ".{$verInfo['patch']}" : "") . "-{$verInfo['stability']}{$verInfo['number']}", '.-'), 'php_ver' => phpversion(), 'api_config' => $config, 'compilation_enabled' => (bool)(defined('COMPILER_INCLUDE_PATH')), 'max_upload_size' => min((int)ini_get("upload_max_filesize"), (int)ini_get("post_max_size"), (int)ini_get("memory_limit")));
 
 		return $result;
 	}

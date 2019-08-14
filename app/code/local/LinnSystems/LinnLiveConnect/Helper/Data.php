@@ -35,7 +35,7 @@ class LinnSystems_LinnLiveConnect_Helper_Data extends Mage_Core_Helper_Abstract
     }
 
 
-    public function _convertFiltersToArray($filters) {
+    public function convertFiltersToArray($filters) {
         $arrayParams = array(
 			   'nin',
 			   'in',
@@ -375,5 +375,14 @@ class LinnSystems_LinnLiveConnect_Helper_Data extends Mage_Core_Helper_Abstract
                 $productData->websites = $currentWebsites;
             }
         }         
+    }
+
+    public function flushWsdlCache(){
+        $cache_dir = ini_get('soap.wsdl_cache_dir');
+        if($cache_dir){
+            foreach (glob($cache_dir . DS . "wsdl-*") as $filename) {
+                @unlink($filename);
+            }
+        }
     }
 }
