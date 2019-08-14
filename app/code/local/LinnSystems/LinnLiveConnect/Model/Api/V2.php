@@ -79,7 +79,7 @@ class Factory{
         $version = intval($version);
 
         if ($version == 0)
-            throw new Mage_Api_Exception('version is not specified');
+            throw new Mage_Api_Exception('version_not_specified');
         if (Settings::$VERSION < $version )
             throw new Mage_Api_Exception('wrong_version');
     }
@@ -390,7 +390,8 @@ class LinnLiveMain extends Mage_Core_Model_Abstract{
 	        	$indexer = Mage::getSingleton('index/indexer');
 				$process = $indexer->getProcessByCode('catalog_product_price');
 				$process->reindexEverything();
-	        } catch (Mage_Core_Exception $e) {
+	        }
+            catch (Mage_Core_Exception $e) {
 	        	throw new Mage_Api_Exception('configurable_creating_error', $e->getMessage());
 	        }
 		}
@@ -532,6 +533,20 @@ class LinnLiveMain extends Mage_Core_Model_Abstract{
 		return $this->_getStore()->getCode();
 	}
 
+	private function _getProductBySku($sku)
+	{
+        if($sku){
+            $product = Mage::getModel('catalog/product');
+            $productId = $product->getIdBySku((string)$sku);
+            if($productId){
+                $product->load($productId);
+                if($product->getId()){
+                    return $product;
+                }
+            }
+        }
+    }
+    
 	private function _getStore($storeCode=null)
 	{
 		if (Mage::app()->isSingleStoreMode()) {
@@ -695,10 +710,10 @@ class LinnLiveMain extends Mage_Core_Model_Abstract{
 
 
     /*
-    *
-    *   Public functions(API)
-    *
-    */
+     *
+     *   Public functions(API)
+     *
+     */
 	public function configurableProduct($set, $sku, $reindex, $productData, $productsSet, $attributesSet, $store=null)
     {
     	if (!$set || !$sku) {
@@ -737,25 +752,33 @@ class LinnLiveMain extends Mage_Core_Model_Abstract{
 
 	public function updateConfigurableProduct($productId, $reindex, $productData, $productsSet, $attributesSet, $store=null, $identifierType='id')
     {
-    	if ($identifierType == 'id')
-		{
-    		$productId = intval($productId);
 
-			if ($productId < 1) {
-	            throw new Mage_Api_Exception('product_not_exists', null);
-	        }
-		}
 
 		$this->_prepareConfigurableData($store, $productData, $assignedProductsArray,
 			$attributesSetArray, $productsSet, $attributesSet);
 
 		try {
             $storeId = Mage::app()->getStore($store)->getId();
-        } catch (Mage_Core_Model_Store_Exception $e) {
+        }
+        catch (Mage_Core_Model_Store_Exception $e) {
         	throw new Mage_Api_Exception('store_not_exists', null);
         }
+        /*
+    	if ($identifierType == 'id')
+		{
+        $productId = intval($productId);
+
+        if ($productId < 1) {
+        throw new Mage_Api_Exception('product_not_exists', null);
+        }
+		}*/
 
 		$_loadedProduct = Mage::helper('catalog/product')->getProduct($productId, $storeId, $identifierType);
+
+    	if (!$_loadedProduct->getId())
+		{
+            throw new Mage_Api_Exception('product_not_exists', null);
+        }
 
 		$_categoryIds = $_loadedProduct->getCategoryIds();
 		if (property_exists($productData, 'category_ids'))
@@ -808,8 +831,8 @@ class LinnLiveMain extends Mage_Core_Model_Abstract{
     }
 
     /*
-    *   Checks if this Magento server has valid Extension installed
-	*/
+     *   Checks if this Magento server has valid Extension installed
+     */
     public function storesList()
     {
 		return ($this->_getCurrentVersion() >= 160);
@@ -822,24 +845,33 @@ class LinnLiveMain extends Mage_Core_Model_Abstract{
 
 	public function deleteAssigned($productId, $store=null, $identifierType='id')
     {
-		if ($identifierType == 'id')
-		{
-			$productId = intval($productId);
-
-			if ($productId < 1) {
-	            throw new Mage_Api_Exception('product_not_exists', null);
-	        }
-		}
-
 		$store = $this->_currentStoreCode($store);
 
 		try {
             $storeId = Mage::app()->getStore($store)->getId();
-        } catch (Mage_Core_Model_Store_Exception $e) {
+        }
+        catch (Mage_Core_Model_Store_Exception $e) {
         	throw new Mage_Api_Exception('store_not_exists', null);
         }
+        /*
+		if ($identifierType == 'id')
+		{
+        $productId = intval($productId);
+
+        if ($productId < 1) {
+        throw new Mage_Api_Exception('product_not_exists', null);
+        }
+		}*/
+
 
 		$_loadedProduct = Mage::helper('catalog/product')->getProduct($productId, $storeId, $identifierType);
+
+    	if (!$_loadedProduct->getId())
+		{
+            throw new Mage_Api_Exception('product_not_exists', null);
+        }
+
+
 		$currentWebsites = $_loadedProduct->getWebsiteIds();
 		$websiteId = $this->_getWebsiteId($store);
 		$websiteId = $websiteId[0];
@@ -925,12 +957,12 @@ class LinnLiveMain extends Mage_Core_Model_Abstract{
     }
 
 	/*
-	 * Implementation of catalogProductList because of bug in associativeArray.
-	 * Extended to filter by category id too.
-	 *
-	 * Use 'entity_id' for product_id,
-	 * 'type_id' instead of product type.
-	 */
+     * Implementation of catalogProductList because of bug in associativeArray.
+     * Extended to filter by category id too.
+     *
+     * Use 'entity_id' for product_id,
+     * 'type_id' instead of product type.
+     */
 	public function productList($page, $perPage, $filters = null, $store = null)
     {
         $arrayParams = array(
@@ -942,7 +974,8 @@ class LinnLiveMain extends Mage_Core_Model_Abstract{
 
 		try {
             $storeId = Mage::app()->getStore($store)->getId();
-        } catch (Mage_Core_Model_Store_Exception $e) {
+        }
+        catch (Mage_Core_Model_Store_Exception $e) {
         	throw new Mage_Api_Exception('store_not_exists', null);
         }
 
@@ -999,7 +1032,8 @@ class LinnLiveMain extends Mage_Core_Model_Abstract{
                 foreach ($preparedFilters as $field => $value) {
                     $collection->addFieldToFilter($field, $value);
                 }
-            } catch (Mage_Core_Exception $e) {
+            }
+            catch (Mage_Core_Exception $e) {
             	throw new Mage_Api_Exception('filters_invalid', $e->getMessage());
             }
         }
@@ -1179,23 +1213,30 @@ class LinnLiveMain extends Mage_Core_Model_Abstract{
 
 	public function update($productId, $productData, $store = null, $identifierType = 'id')
 	{
-		if ($identifierType == 'id')
-		{
-			$productId = intval($productId);
-
-			if ($productId < 1) {
-	            throw new Mage_Api_Exception('product_not_exists', null);
-	        }
-		}
-
 		$store = $this->_currentStoreCode($store);
 		try {
             $storeId = Mage::app()->getStore($store)->getId();
-        } catch (Mage_Core_Model_Store_Exception $e) {
+        }
+        catch (Mage_Core_Model_Store_Exception $e) {
         	throw new Mage_Api_Exception('store_not_exists', null);
         }
+        /*
+		if ($identifierType == 'id')
+		{
+        $productId = intval($productId);
+
+        if ($productId < 1) {
+        throw new Mage_Api_Exception('product_not_exists', null);
+        }
+		}*/
 
         $_loadedProduct = Mage::helper('catalog/product')->getProduct($productId, $storeId, $identifierType);
+
+        if (!$_loadedProduct->getId())
+        {
+            throw new Mage_Api_Exception('product_not_exists', null);
+        }
+
 
 		$_categoryIds = $_loadedProduct->getCategoryIds();
 		if (property_exists($productData, 'category_ids'))
@@ -1251,6 +1292,11 @@ class LinnLiveMain extends Mage_Core_Model_Abstract{
 
 	public function create($type, $set, $sku, $productData, $store = null)
 	{
+        $product = $this->_getProductBySku($sku);
+        if($product){
+            return $product->getId();
+        }
+        
 		$store = $this->_currentStoreCode($store);
 
 		$DefaultStore = $this->_getStore();
@@ -1397,7 +1443,7 @@ class LinnLiveEnterprise extends LinnLiveMain{
                         }
                         else
                         {
-						  $productData->additional_attributes->single_data[$i]->value = $_availableOptions[$option->attribute_id][strtolower($option->label)];
+                            $productData->additional_attributes->single_data[$i]->value = $_availableOptions[$option->attribute_id][strtolower($option->label)];
                         }
                     }
 					else
@@ -1408,7 +1454,7 @@ class LinnLiveEnterprise extends LinnLiveMain{
                         }
                         else
                         {
-						  $productData->additional_attributes->single_data[$i]->value = $option->value;
+                            $productData->additional_attributes->single_data[$i]->value = $option->value;
                         }
                     }
 					$i++;
