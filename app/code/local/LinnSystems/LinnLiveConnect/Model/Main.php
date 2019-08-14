@@ -5,7 +5,7 @@ class LinnSystems_LinnLiveConnect_Model_Main extends Mage_Core_Model_Abstract {
 
 	protected $_permittedAttributes = array('select', 'multiselect', 'text', 'textarea', 'date', 'price');
 
-	protected function _prepareConfigurableData($productsSet, $attributesSet, $isUpdate) {
+	protected function _prepareConfigurableData($productsSet, $attributesSet, $productId, $isUpdate) {
     
 		$helper = Mage::helper('linnLiveConnect');
 
@@ -20,14 +20,30 @@ class LinnSystems_LinnLiveConnect_Model_Main extends Mage_Core_Model_Abstract {
 			$attributesSet = array($attributesSet);
 		}
 
-		$attributesSetArray = $this -> _prepareAttributesData($helper -> objectToArray($attributesSet), $assignedProductsArray);
-
+		$attributesSetArray = $this -> _prepareAttributesData($helper -> objectToArray($attributesSet), $assignedProductsArray);       
+        
 		foreach ($attributesSetArray as $key => $value) {
 			$attributesSetArray[$key]["id"] = NULL;
 			$attributesSetArray[$key]["position"] = NULL;
 			$attributesSetArray[$key]["store_label"] = isset($value['frontend_label']) ? $value['frontend_label'] : NULL;
 			//$attributesSetArray[$key]["use_default"] = 0;
-
+            
+            if($isUpdate && isset($value['attribute_id']) && $value['attribute_id'] > 0) {
+                $superAttribute = Mage::getModel('catalog/product_type_configurable_attribute')->getCollection()
+                    ->addFieldToFilter('product_id', $productId)
+                    ->addFieldToFilter('attribute_id', $value['attribute_id'])
+                    ->getData(); 
+                    
+                if(sizeof($superAttribute)){
+                    $superAttribute= array_pop($superAttribute);          
+                    if(isset($superAttribute['product_super_attribute_id']))
+                    {
+                        $attributesSetArray[$key]["id"] = $superAttribute['product_super_attribute_id'];
+                        $attributesSetArray[$key]["position"] = $superAttribute['position'];
+                    }                              
+                }
+            }
+            
 			if ($isUpdate == false) {
 				//check if attribute exists and available
 				$checkAttribute = Mage::getModel('catalog/resource_eav_attribute') -> loadByCode('catalog_product', $attributesSetArray[$key]["attribute_code"]);
@@ -36,8 +52,8 @@ class LinnSystems_LinnLiveConnect_Model_Main extends Mage_Core_Model_Abstract {
 					throw new Mage_Api_Exception('invalid_variation_attribute', 'Invalid attribute [' . $checkAttribute['attribute_code'] . '] provided to Magento extension for creating Variation / Product with options. Check attributes/variations in LinnLive Magento configurator if they do exist/match the ones on the back-end.');
 				}
 			}
-
 		}
+
 		return array($assignedProductsArray, $attributesSetArray);
 	}
 
@@ -138,10 +154,9 @@ class LinnSystems_LinnLiveConnect_Model_Main extends Mage_Core_Model_Abstract {
 
 		$product -> setConfigurableProductsData($assignedProducts);
 
-		if ($isUpdate == false) {
-			$product -> setConfigurableAttributesData($assignedAttributes);
-			$product -> setCanSaveConfigurableAttributes(true);
-		}
+		$product -> setConfigurableAttributesData($assignedAttributes);
+		$product -> setCanSaveConfigurableAttributes(true);
+
 
 		try {
 			$result = $product -> save();
@@ -240,7 +255,7 @@ class LinnSystems_LinnLiveConnect_Model_Main extends Mage_Core_Model_Abstract {
 		return $result;
 	}
 
-	protected function _log($message) {
+	protected function log($message) {
     
 		Mage::log(print_r($message, true), null, 'LinnLiveExt.log');
 	}

@@ -306,7 +306,7 @@ class LinnSystems_LinnLiveConnect_Model_Community extends LinnSystems_LinnLiveCo
 		$productAPI = Mage::getModel('catalog/product_api_v2');
 		$productId = $productAPI -> create('configurable', $set, $sku, $productData, $store);
 
-		list($assignedProductsArray, $attributesSetArray) = $this -> _prepareConfigurableData($productsSet, $attributesSet, false);
+		list($assignedProductsArray, $attributesSetArray) = $this -> _prepareConfigurableData($productsSet, $attributesSet, $productId, false);
 		$this -> _updateConfigurable($store, $productId, $assignedProductsArray, $attributesSetArray, 'id', false, $reindex);
 
 		return $productId;
@@ -374,7 +374,7 @@ class LinnSystems_LinnLiveConnect_Model_Community extends LinnSystems_LinnLiveCo
 
 		$productAPI -> update($productId, $productData, $store, $identifierType);
 
-		list($assignedProductsArray, $attributesSetArray) = $this -> _prepareConfigurableData($productsSet, $attributesSet, true);
+		list($assignedProductsArray, $attributesSetArray) = $this -> _prepareConfigurableData($productsSet, $attributesSet, $productId, true);
 
 		return $this -> _updateConfigurable($store, $productId, $assignedProductsArray, $attributesSetArray, $identifierType, true, $reindex);
 	}

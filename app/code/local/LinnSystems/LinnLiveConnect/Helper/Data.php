@@ -69,7 +69,7 @@ class LinnSystems_LinnLiveConnect_Helper_Data extends Mage_Core_Helper_Abstract
         return $preparedFilters;
     }
 
-    protected function _log($message) {
+    protected function log($message) {
     
         Mage::log(print_r($message, true), null, 'LinnLiveExt.log');
     }
