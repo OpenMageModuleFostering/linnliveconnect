@@ -61,6 +61,10 @@
             <title>Update products in bulk</title>
             <acl>linnLive/updateBulk</acl>
           </updatePriceBulk>
+          <getGeneralInfo translate="title" module="linnLiveConnect">
+            <title>Get general information</title>
+            <acl>linnLive/getGeneralInfo</acl>
+          </getGeneralInfo>
         </methods>
         
         <faults module="linnLiveConnect">
@@ -120,7 +124,10 @@
             <code>112</code>
             <message>Version is not specified.</message>
           </version_not_specified>
-
+          <invalid_variation_attribute>
+            <code>113</code>
+            <message>Invalid variation attribute.</message>
+		  </invalid_variation_attribute>
         </faults>
       </linnLive>
     </resources>
@@ -173,6 +180,9 @@
           <updatePriceBulk translate="title" module="linnLiveConnect">
             <title>Update products in bulk</title>
           </updatePriceBulk>
+          <getGeneralInfo translate="title" module="linnLiveConnect">
+            <title>Get general info</title>
+          </getGeneralInfo>          
         </linnLive>
       </resources>
     </acl>

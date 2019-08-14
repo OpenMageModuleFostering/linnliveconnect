@@ -8,6 +8,23 @@
              targetNamespace="urn:{{var wsdl.name}}">
   <wsdl:types>
     <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:{{var wsdl.name}}">
+      <!-- Get general version-->
+      <xsd:complexType name="linnLiveGetGeneralInfoApiConfigResponseDataArray">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="unbounded" name="complexObjectArray" type="typens:linnLiveGetGeneralInfoApiConfigResponseDataEntity" />
+        </xsd:sequence>
+      </xsd:complexType>
+
+      <xsd:complexType name="linnLiveGetGeneralInfoApiConfigResponseDataEntity">
+        <xsd:sequence>
+          <xsd:element name="charset" type="xsd:string" minOccurs="1" />
+          <xsd:element name="session_timeout" type="xsd:string" minOccurs="1" />
+          <xsd:element name="compliance_wsi" type="xsd:string" minOccurs="1" />
+          <xsd:element name="wsdl_cache_enabled" type="xsd:string" minOccurs="1" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <!-- End get general version-->     
+      
       <!-- Update bulk-->
       <xsd:complexType name="linnLiveUpdatePriceBulkRequestDataArray">
         <xsd:sequence>
@@ -159,6 +176,7 @@
           <xsd:element minOccurs="1" name="value_index" type="xsd:string" />
           <xsd:element minOccurs="1" name="is_percent" type="xsd:boolean" />
           <xsd:element minOccurs="1" name="pricing_value" type="xsd:double" />
+          <xsd:element minOccurs="1" name="use_default" type="xsd:boolean" />
         </xsd:sequence>
       </xsd:complexType>
       <!-- Configurable product data sets end -->
@@ -456,6 +474,25 @@
         </xsd:complexType>
       </xsd:element>
 
+      <xsd:element name="linnLiveGetGeneralInfoRequestParam">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="sessionId" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="version" type="xsd:int" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="linnLiveGetGeneralInfoResponseParam">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="llc_ver" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="magento_ver" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="php_ver" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="api_config" type="typens:linnLiveGetGeneralInfoApiConfigResponseDataArray" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>       
+      
       <xsd:element name="linnLiveGetProductStoreURLRequestParam">
         <xsd:complexType>
           <xsd:sequence>
@@ -604,6 +641,14 @@
     <wsdl:part name="parameters" element="typens:linnLiveGetStoreCodeResponseParam" />
   </wsdl:message>
 
+  <wsdl:message name="linnLiveGetGeneralInfoRequest">
+    <wsdl:part name="parameters" element="typens:linnLiveGetGeneralInfoRequestParam" />
+  </wsdl:message>
+  <wsdl:message name="linnLiveGetGeneralInfoResponse">
+    <wsdl:part name="parameters" element="typens:linnLiveGetGeneralInfoResponseParam" />
+  </wsdl:message>
+
+
   <wsdl:message name="linnLiveGetProductStoreURLRequest">
     <wsdl:part name="parameters" element="typens:linnLiveGetProductStoreURLRequestParam" />
   </wsdl:message>
@@ -655,7 +700,7 @@
   <wsdl:message name="catalogProductAttributeRemoveResponse">
     <wsdl:part name="parameters" element="typens:linnLiveAttributeRemoveResponseParam" />
   </wsdl:message>
-  <!-- Stub parameters for catalogProductAttributeRemove end -->
+   <!-- Stub parameters for catalogProductAttributeRemove end -->
 
 
 
@@ -712,6 +757,12 @@
       <wsdl:output message="typens:linnLiveGetProductStoreURLResponse" />
     </wsdl:operation>
 
+    <wsdl:operation name="linnLiveGetGeneralInfo">
+      <wsdl:documentation>Get general information</wsdl:documentation>
+      <wsdl:input message="typens:linnLiveGetGeneralInfoRequest" />
+      <wsdl:output message="typens:linnLiveGetGeneralInfoResponse" />
+    </wsdl:operation>
+
     <wsdl:operation name="linnLiveUpdatePriceBulk">
       <wsdl:documentation>Update products in bulk</wsdl:documentation>
       <wsdl:input message="typens:linnLiveUpdatePriceBulkRequest" />
@@ -724,13 +775,13 @@
       <wsdl:output message="typens:linnLiveProductListResponse"></wsdl:output>
     </wsdl:operation>
 
-    <!-- remove for 1.8  -->
+    <!-- remove for 1.8 -->
     <wsdl:operation name="catalogProductAttributeRemove">
       <wsdl:documentation>Stub operation for catalogProductAttributeRemove</wsdl:documentation>
       <wsdl:input message="typens:catalogProductAttributeRemoveRequest" />
       <wsdl:output message="typens:catalogProductAttributeRemoveResponse" />
     </wsdl:operation>
-    <!-- remove for 1.8 -->
+     <!-- remove for 1.8 -->
 
     <wsdl:operation name="linnLiveInfo">
       <wsdl:documentation>Get information about current magento settings and installation</wsdl:documentation>
@@ -846,6 +897,17 @@
       </wsdl:output>
     </wsdl:operation>
 
+    <wsdl:operation name="linnLiveGetGeneralInfo">
+      <soap:operation soapAction="" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>    
+    
+    
     <wsdl:operation name="linnLiveUpdatePriceBulk">
       <soap:operation soapAction="" />
       <wsdl:input>
