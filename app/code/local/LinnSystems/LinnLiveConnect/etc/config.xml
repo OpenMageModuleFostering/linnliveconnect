@@ -2,7 +2,7 @@
 <config>
     <modules>
         <LinnSystems_LinnLiveConnect>
-            <version>1.1.64</version>
+            <version>1.1.65</version>
         </LinnSystems_LinnLiveConnect>
     </modules>
     <global>
