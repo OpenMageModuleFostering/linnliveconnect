@@ -871,13 +871,13 @@ class LinnLiveCommunity extends LinnLiveMain {
 	 *
 	 * @return boolean
 	 */
-	protected function updateProductPrice($productId, $store = null, $identifierType = 'id') {
+	protected function updateProductPrice($productId, $price, $store = null, $identifierType = 'id') {
 
 		$product = Mage::helper('catalog/product') -> getProduct($productId, $store, $identifierType);
 
 		if ($product && $product -> getId()) {
-			if ($product -> getPrice() != $d -> price) {
-				$product -> setPrice($d -> price);
+			if ($product -> getPrice() != $price) {
+				$product -> setPrice($price);
 				$product -> save();
 			}
 			return true;
@@ -1070,7 +1070,7 @@ class LinnLiveCommunity extends LinnLiveMain {
 		for ($i = 0; $i < sizeof($data); $i++) {
 			$entity = $data[$i];
 			try {
-				$result = $this -> updateProductPrice($entity -> sku, $store, $identifierType);
+				$result = $this -> updateProductPrice($entity -> sku, $entity -> price, $store, $identifierType);
 				$response[] = array('sku' => $entity -> sku, 'success' => $result);
 			} catch (Exception $e) {
 				$response[] = array('sku' => $entity -> sku, 'success' => false);
