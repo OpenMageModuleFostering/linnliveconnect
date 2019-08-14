@@ -10,7 +10,8 @@ class Settings {
 }
 
 class Mage_Catalog_Model_Product_Api_V2_LL extends Mage_Catalog_Model_Product_Api_V2{
-    public function create($type, $set, $sku, $productData, $store){
+
+    public function create($type, $set, $sku, $productData, $store = NULL){
         $tries = 0;
         $maxtries = 3;
         Mage::setIsDeveloperMode(true);
@@ -31,6 +32,29 @@ class Mage_Catalog_Model_Product_Api_V2_LL extends Mage_Catalog_Model_Product_Ap
             }
 
         } while ($retry);      
+    }
+    
+    public function update($productId, $productData, $store = null, $identifierType = null){
+        $tries = 0;
+        $maxtries = 3;
+        Mage::setIsDeveloperMode(true);
+        
+        do {
+            $retry = false;
+            try {       
+                return parent::update($productId, $productData, $store, $identifierType);
+            } catch (Exception $e) {
+               
+                if ($tries < $maxtries && $e->getMessage()=='SQLSTATE[40001]: Serialization failure: 1213 Deadlock found when trying to get lock; try restarting transaction') {
+                    $retry = true;
+                    sleep(1);
+                }else{
+                    throw $e->getMessage();
+                }
+                $tries++;
+            }
+
+        } while ($retry);     
     }
 }
 
@@ -107,13 +131,7 @@ class LinnSystems_LinnLiveConnect_Model_Api_V2 {
         $worker = Factory::createWorker($version);
         return $worker->updatePriceBulk($data, $store, $identifierType);
     }
-    /*
-    public function debugInfo()
-    {
-        $worker = Factory::createWorker(Settings::getShortVersion());
-        return $worker->debugInfo();
-    }
-    */
+
     public function getGeneralInfo($version)
     {
         $worker = Factory::createWorker($version);
@@ -228,7 +246,7 @@ class LinnLiveMain extends Mage_Core_Model_Abstract {
                 $checkAttribute = Mage::getModel('catalog/resource_eav_attribute')->loadByCode('catalog_product',$attributesSetArray[$key]["attribute_code"]);
 
                 if(!$checkAttribute->getId() || !$this->_isConfigurable($checkAttribute)){
-                    throw new Mage_Api_Exception('invalid_variation_attribute', 'Invalid variation attribute ['.$checkAttribute['attribute_code'].']');
+                    throw new Mage_Api_Exception('invalid_variation_attribute', 'Invalid attribute ['.$checkAttribute['attribute_code'].'] provided to Magento extension for creating Variation / Product with options. Check attributes/variations in LinnLive Magento configurator if they do exist/match the ones on the back-end.');
                 }
             }
             
@@ -871,6 +889,7 @@ class LinnLiveMain extends Mage_Core_Model_Abstract {
      */
     public function configurableProduct($set, $sku, $reindex, $productData, $productsSet, $attributesSet, $store=null)
     {
+
         if (!$set || !$sku) {
             throw new Mage_Api_Exception('data_invalid');
         }
@@ -1136,7 +1155,7 @@ class LinnLiveMain extends Mage_Core_Model_Abstract {
         //prepare and convert filters to array
         $preparedFilters = $this->_convertFiltersToArray($filters);
         if (empty($preparedFilters)) {
-            throw new Mage_Api_Exception('filters_invalid', 'Filters not found');
+            throw new Mage_Api_Exception('filters_invalid', null);
         }
 
         //load collection
@@ -1436,19 +1455,7 @@ class LinnLiveMain extends Mage_Core_Model_Abstract {
         
         return $productAPI->create($type, $set, $sku, $productData, $store);
     }
-    /*
-    public function debugInfo()
-    {
-        $verInfo = Mage::getVersionInfo();
 
-        $result = array(
-            'llc_ver' => Settings::getShortVersion(),
-            'magento_ver' => $verInfo
-        );
-
-        return $result;
-    }
-    */
     public function getProductStoreURL($productId, $store = null, $identifierType = 'id') {
 
         $storeId = $this->getStoreCode($store);

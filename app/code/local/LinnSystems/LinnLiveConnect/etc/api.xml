@@ -7,29 +7,29 @@
         <model>linnLiveConnect/api</model>
         <methods>
           <configurableProduct translate="title" module="linnLiveConnect">
-            <title>Configurable products creation</title>
+            <title>Create configurable product</title>
             <acl>linnLive/configurableCreate</acl>
           </configurableProduct>
           <updateConfigurableProduct translate="title" module="linnLiveConnect">
-            <title>Configurable products creation</title>
+            <title>Update configurable product</title>
             <acl>linnLive/configrableUpdate</acl>
           </updateConfigurableProduct>
           <createProduct translate="title" module="linnLiveConnect">
-            <title>Create product (extended version)</title>
+            <title>Create product</title>
             <method>create</method>
             <acl>linnLive/create</acl>
           </createProduct>
           <updateProduct translate="title" module="linnLiveConnect">
-            <title>Update product (extended version)</title>
+            <title>Update product</title>
             <method>update</method>
             <acl>linnLive/update</acl>
           </updateProduct>
           <productAttributeOptions translate="title" module="linnLiveConnect">
-            <title>Get attributes by attribute Set id</title>
+            <title>Get attributes by attribute set ID</title>
             <acl>linnLive/attributeOptions</acl>
           </productAttributeOptions>
           <storesList translate="title" module="linnLiveConnect">
-            <title>Retreive list of install stores</title>
+            <title>Retrieve list of installed stores</title>
             <acl>linnLive/storesList</acl>
           </storesList>
           <getStoreCode translate="title" module="linnLiveConnect">
@@ -37,16 +37,11 @@
             <acl>linnLive/getStoreCode</acl>
           </getStoreCode>
           <productList translate="title" module="linnLiveConnect">
-            <title>Get current store code</title>
+            <title>Retrieve products list by filters</title>
             <acl>linnLive/productList</acl>
           </productList>
-          <info translate="title" module="linnLiveConnect">
-            <title>Get information about current magento settings and installation</title>
-            <method>debugInfo</method>
-            <acl>linnLive/info</acl>
-          </info>
           <assignImages translate="title" module="linnLiveConnect">
-            <title>Assigns configurable product images to children products</title>
+            <title>Assigns configurable product images to child products</title>
             <acl>linnLive/assignImages</acl>
           </assignImages>
           <deleteAssigned translate="title" module="linnLiveConnect">
@@ -54,7 +49,7 @@
             <acl>linnLive/deleteAssigned</acl>
           </deleteAssigned>
           <getProductStoreURL translate="title" module="linnLiveConnect">
-            <title>Get product url</title>
+            <title>Get product URL from Magento</title>
             <acl>linnLive/getProductStoreURL</acl>
           </getProductStoreURL>
           <updatePriceBulk translate="title" module="linnLiveConnect">
@@ -62,72 +57,68 @@
             <acl>linnLive/updateBulk</acl>
           </updatePriceBulk>
           <getGeneralInfo translate="title" module="linnLiveConnect">
-            <title>Get general information</title>
+            <title>Get information about current magento settings</title>
             <acl>linnLive/getGeneralInfo</acl>
           </getGeneralInfo>
         </methods>
-        
+
         <faults module="linnLiveConnect">
           <data_invalid>
             <code>100</code>
-            <message>Invalid data given. Details in error message.</message>
+            <message>Invalid data provided to Magento extension for creating Variation / Product with options. Check attributes/variations in LinnLive Magento configurator if they do match the ones on the back-end, or you can check if the SKU's are not already listed on Magento.</message>
           </data_invalid>
           <product_type_not_exists>
             <code>101</code>
-            <message>Product type is not in allowed types.</message>
+            <message>Product type is not allowed to be listed in the current list of allowed products/types.</message>
           </product_type_not_exists>
           <product_attribute_set_not_exists>
             <code>102</code>
-            <message>Product attribute set is not existed.</message>
+            <message>Product attribute set was not found on Magento.</message>
           </product_attribute_set_not_exists>
           <product_attribute_set_not_valid>
             <code>103</code>
-            <message>Product attribute set is not belong catalog product entity type.</message>
+            <message>roduct attribute set was not added to catalogue.</message>
           </product_attribute_set_not_valid>
           <products_not_suitable>
             <code>104</code>
-            <message>Product not suitable to be used in configurable product.</message>
+            <message>Product is not suitable to be used in Variations / Products with options.</message>
           </products_not_suitable>
           <configurable_creating_error>
             <code>105</code>
-            <message>Configurable product creating error.</message>
+            <message>There was an error, while trying to create Variation / Product with options. Check attributes/variations in LinnLive Magento configurator if they do match the ones on the back-end or you can check if the SKU's are not already listed on Magento.</message>
           </configurable_creating_error>
           <wrong_version>
             <code>106</code>
-            <message>
-              Wrong extended API version, please update your LinnLive Magento extension.
-              Go to System->Magento Connect->Magento Connect Manager in your Magento Admin panel,
-              and click on "Check for Upgrades", and upgrade you LinnLiveConnect extension to last one.
-            </message>
+            <message>Wrong extended API version. Update your Magento LinnLive Extension. In order to do this, go to your Magento Admin Panel > System  > Magento Connect Manager > click on “Check for Upgrades”, and upgrade your LinnLive Connect extension to the latest version.</message>
           </wrong_version>
           <attribute_not_exists>
             <code>107</code>
-            <message>Attribute not found.</message>
+            <message>Attribute was not found. Check if you have updated your Magento configurator attributes by clicking on the “Update” button on the top of the screen.</message>
           </attribute_not_exists>
           <product_not_exists>
             <code>108</code>
-            <message>Product not found.</message>
+            <message>Product not found, it might have been deleted from Magento. If you are sure that the product is there, you can try to re-link your item by SKU in order to update it properly.</message>
           </product_not_exists>
           <store_not_exists>
             <code>109</code>
-            <message>Store not found.</message>
+            <message>There was no Magento store found with this ID. Double-check the store ID and the extended property name/value if needed.</message>
           </store_not_exists>
           <unsupported_edition>
             <code>110</code>
-            <message>Unsupported edition.</message>
+            <message>Unsupported version of Magento. This error message can occur if you are using any other Magento editions, that we do not support or Magento versions that are less than 1.7.0.2. NOTE: We do support Magento Enterprise and Magento Community.</message>
           </unsupported_edition>
           <filters_invalid>
             <code>111</code>
-            <message>Invalid filters.</message>
+            <message>Upon trying to reach Magento extension, inappropriate search filters were assigned to the template.</message>
           </filters_invalid>
           <version_not_specified>
             <code>112</code>
-            <message>Version is not specified.</message>
+            <message>Unsupported version of Magento. This error message can occur if you are using any other Magento editions, that we do not support or Magento versions that are less than 1.7.0.2. NOTE: We do support Magento Enterprise and Magento Community.</message>
           </version_not_specified>
           <invalid_variation_attribute>
             <code>113</code>
-            <message>Invalid variation attribute.</message>
-		  </invalid_variation_attribute>
+            <message>Invalid attributes provided to Magento extension for creating Variation / Product with options. Check attributes/variations in LinnLive Magento configurator if they do exist/match the ones on the back-end.</message>
+          </invalid_variation_attribute>
         </faults>
       </linnLive>
     </resources>
@@ -136,16 +127,16 @@
         <linnLive translate="title" module="linnLiveConnect">
           <title>LinnLive</title>
           <create translate="title" module="linnLiveConnect">
-            <title>Product creation (extended)</title>
+            <title>Create product</title>
           </create>
           <update translate="title" module="linnLiveConnect">
-            <title>Product update (extended)</title>
+            <title>Update product</title>
           </update>
           <attributeOptions translate="title" module="linnLiveConnect">
-            <title>Attribute options by set id</title>
+            <title>Get attributes by attribute set ID</title>
           </attributeOptions>
           <storesList translate="title" module="linnLiveConnect">
-            <title>Get stores list</title>
+            <title>Retrieve list of installed stores</title>
           </storesList>
           <createImage translate="title" module="linnLiveConnect">
             <title>Create image</title>
@@ -154,35 +145,32 @@
             <title>Update image</title>
           </updateImage>
           <getStoreCode translate="title" module="linnLiveConnect">
-            <title>get current store code</title>
+            <title>Get current store code</title>
           </getStoreCode>
           <configurableCreate translate="title" module="linnLiveConnect">
-            <title>Configurable product creation</title>
+            <title>Create configurable product</title>
           </configurableCreate>
           <configurableUpdate translate="title" module="linnLiveConnect">
-            <title>Configurable product update</title>
+            <title>Update configurable product</title>
           </configurableUpdate>
           <productList translate="title" module="linnLiveConnect">
             <title>Retrieve products list by filters</title>
           </productList>
-          <info translate="title" module="linnLiveConnect">
-            <title>Get information about current magento settings and installation</title>
-          </info>
           <assignImages translate="title" module="linnLiveConnect">
-            <title>Assigns configurable product images to children's products</title>
+            <title>Assigns configurable product images to child products</title>
           </assignImages>
           <deleteAssigned translate="title" module="linnLiveConnect">
             <title>Remove assigned item from inventory</title>
           </deleteAssigned>
           <getProductStoreURL translate="title" module="linnLiveConnect">
-            <title>Get product URL</title>
+            <title>Get product URL from Magento</title>
           </getProductStoreURL>
           <updatePriceBulk translate="title" module="linnLiveConnect">
             <title>Update products in bulk</title>
           </updatePriceBulk>
           <getGeneralInfo translate="title" module="linnLiveConnect">
-            <title>Get general info</title>
-          </getGeneralInfo>          
+            <title>Get information about current magento settings</title>
+          </getGeneralInfo>
         </linnLive>
       </resources>
     </acl>
