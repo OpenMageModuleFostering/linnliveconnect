@@ -2,7 +2,7 @@
 <config>
     <modules>
         <LinnSystems_LinnLiveConnect>
-            <version>1.1.60</version>
+            <version>1.1.61</version>
         </LinnSystems_LinnLiveConnect>
     </modules>
     <global>
@@ -21,6 +21,12 @@
 					<product_link_api>LinnSystems_LinnLiveConnect_Model_Product_Link_Api</product_link_api>
 				</rewrite>
 			</catalog>
+            <core>
+                <rewrite>
+                    <url>LinnSystems_LinnLiveConnect_Model_Core_Url</url>
+                    <store>LinnSystems_LinnLiveConnect_Model_Core_Store</store>
+                </rewrite>
+            </core>
         	<linnLiveConnect>
                 <class>LinnSystems_LinnLiveConnect_Model</class>
             </linnLiveConnect>	

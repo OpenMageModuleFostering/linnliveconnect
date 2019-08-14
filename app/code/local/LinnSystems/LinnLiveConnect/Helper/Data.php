@@ -206,7 +206,11 @@ class LinnSystems_LinnLiveConnect_Helper_Data extends Mage_Core_Helper_Abstract
                 $currentOptions[$attribute_id] = array();
             }
 
-            $attributeOptions = $attributeApi->options($attribute_id);
+            try{
+                $attributeOptions = $attributeApi->options($attribute_id);
+            }catch(Exception $ex){
+                throw new Mage_Api_Exception('attribute_not_exists', $attribute_id);
+            }
 
             foreach ($attributeOptions as $opts)
             {
@@ -395,3 +399,4 @@ class LinnSystems_LinnLiveConnect_Helper_Data extends Mage_Core_Helper_Abstract
         }
     }
 }
+?>
