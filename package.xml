@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package>
     <name>LinnLiveConnect</name>
-    <version>1.1.45</version>
+    <version>1.1.47</version>
     <stability>stable</stability>
     <license>GPL v2</license>
     <channel>community</channel>
@@ -9,11 +9,11 @@
     <summary>Extended SOAP WS-I compliant API to support integration with LinnLive2.</summary>
     <description>Extended SOAP WS-I compliant API to support integration with LinnLive2 (http://www.linnlive.com).&#xD;
 Contains some workarounds to avoid bugs in original Magento modules and additional functionality to operate Magento store remotely.</description>
-    <notes>status bug fix</notes>
+    <notes>update prices in bulk added</notes>
     <authors><author><name>Albert Andrejev</name><user>albert_andrejev</user><email>albert@linnsystems.com</email></author><author><name>Pavel Nikolajev</name><user>Pavel_LL2</user><email>pavel.nokolajev@linnsystems.com</email></author><author><name>Aleksandr Kornev</name><user>alex_LL2</user><email>alex.kornevs@linnsystems.com</email></author></authors>
-    <date>2014-05-12</date>
-    <time>06:40:53</time>
-    <contents><target name="magelocal"><dir name="LinnSystems"><dir name="LinnLiveConnect"><dir name="Helper"><file name="Data.php" hash="5fe5216de67d4e69a0f418b0cd7780ee"/></dir><dir name="Model"><dir name="Api"><file name="V2.php" hash="d7df5aa90bf4e96c09d1969c4ae7fe27"/></dir></dir><dir name="etc"><file name="api.xml" hash="ae6bb50af6b605606819021ce4acd33d"/><file name="config.xml" hash="9367dc40a0ce3d4078039f495ccd6527"/><file name="wsdl.xml" hash="fc21f2963c1253f5f40e5e8414312174"/><file name="wsi.xml" hash="ef000d5115f5988664f58df8b9139e5e"/></dir></dir></dir></target><target name="mageetc"><dir name="modules"><file name="LinnSystems_LinnLiveConnect.xml" hash="19c48712cd0516815d6784592ada0881"/></dir></target></contents>
+    <date>2014-06-25</date>
+    <time>08:48:09</time>
+    <contents><target name="magelocal"><dir name="LinnSystems"><dir name="LinnLiveConnect"><dir name="Helper"><file name="Data.php" hash="5fe5216de67d4e69a0f418b0cd7780ee"/></dir><dir name="Model"><dir name="Api"><file name="V2.php" hash="6d34f49d0a9103d6d7d1349abb87759b"/></dir></dir><dir name="etc"><file name="api.xml" hash="75403bf71702d476312343f261337b0b"/><file name="config.xml" hash="717548edb063f515541a7d357242f272"/><file name="wsdl.xml" hash="2b450fd6a6332d20583aaa4fc52012b6"/><file name="wsi.xml" hash="1cf14a4c3fc1c1ab8e7fea32ac1adea9"/></dir></dir></dir></target><target name="mageetc"><dir name="modules"><file name="LinnSystems_LinnLiveConnect.xml" hash="19c48712cd0516815d6784592ada0881"/></dir></target></contents>
     <compatible/>
     <dependencies><required><php><min>5.2.0</min><max>6.0.0</max></php></required></dependencies>
 </package>
