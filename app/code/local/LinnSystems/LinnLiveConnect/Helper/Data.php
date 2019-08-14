@@ -249,40 +249,50 @@ class LinnSystems_LinnLiveConnect_Helper_Data extends Mage_Core_Helper_Abstract
         
             $additional_attributes = new stdClass();
             $additional_attributes->single_data = array();
-            $i = 0;
+            $multiAttributes = array();
             
             if (is_array($productData->additional_attributes))
             {  
                 foreach ($productData->additional_attributes as $option) {
-                    $additional_attributes->single_data[$i] = new stdClass();
-                    $additional_attributes->single_data[$i]->key = $option->code;
-                    
-                    $value = isset($option->value)? $option->value : "";
-                    
-                    if (isset($_availableOptions[$option->attribute_id]) && isset($_availableOptions[$option->attribute_id][strtolower($option->label)]))
-                    {
-                        $value = $_availableOptions[$option->attribute_id][strtolower($option->label)];
-                    }
-                    
                     
                     if ($option->type == 'multiselect')
-                    {           
-                        if(!isset($additional_attributes->single_data[$i]->value)){
-                            $additional_attributes->single_data[$i]->value = array();
+                    {   
+                        if(!isset($multiAttributes[$option->code])){
+                            $multiAttributes[$option->code] = new stdClass();
+                            $multiAttributes[$option->code]->key = $option->code;
+                            $multiAttributes[$option->code]->value = array();
                         }
-                    
-                        array_push($additional_attributes->single_data[$i]->value, $value);
+
+                        $value = isset($option->value)? $option->value : "";
+                        
+                        if (isset($_availableOptions[$option->attribute_id]) && isset($_availableOptions[$option->attribute_id][strtolower($option->label)]))
+                        {
+                            $value = $_availableOptions[$option->attribute_id][strtolower($option->label)];
+                        }                          
+                        
+                        array_push($multiAttributes[$option->code]->value, $value);         
                     }
                     else
                     {
-                        $additional_attributes->single_data[$i]->value = $value; 
-                    }
+                        $newAttribute = new stdClass();
+                        $newAttribute->key = $option->code;
+                        $newAttribute->value = isset($option->value)? $option->value : "";
                     
-                    $i++;                             
+                        if (isset($_availableOptions[$option->attribute_id]) && isset($_availableOptions[$option->attribute_id][strtolower($option->label)]))
+                        {
+                            $newAttribute->value = $_availableOptions[$option->attribute_id][strtolower($option->label)];
+                        }  
+                        
+                        $additional_attributes->single_data[] = $newAttribute;    
+                    }
                 }
+                
+                foreach($multiAttributes as $key=>$data){
+                    $additional_attributes->single_data[] = $data;
+                }               
             }
 
-            if ($i>0)
+            if (sizeof($additional_attributes->single_data))
             {       
                 $productData->additional_attributes = $additional_attributes;
             }

@@ -203,7 +203,7 @@ class LinnSystems_LinnLiveConnect_Model_Community extends LinnSystems_LinnLiveCo
             'api_config' => $config, 
             'compilation_enabled' => (bool)(defined('COMPILER_INCLUDE_PATH')),
             'max_upload_size' => min((int)ini_get("upload_max_filesize"), (int)ini_get("post_max_size"), (int)ini_get("memory_limit")),
-            'store'=>Mage::helper('linnLiveConnect') -> currentStoreCode($store),
+            'store'=>Mage::helper('linnLiveConnect') -> currentStoreCode(null),
             'is_multi_store'=> !Mage::app()->isSingleStoreMode(),
             'extension_version'=>Mage::helper('linnLiveConnect/settings') -> getVersion(),
             'max_execution_time'=>ini_get("max_execution_time")
@@ -596,7 +596,7 @@ class LinnSystems_LinnLiveConnect_Model_Community extends LinnSystems_LinnLiveCo
 	/**
 	 * Bulk price update, TODO: success change to isError
 	 */
-	public function updateProductPrices($data, $store, $identifierType = 'id') {
+	public function updateProductPrices($data, $store = null, $identifierType = 'id') {
 
 		$this -> lockIndexer();
 
