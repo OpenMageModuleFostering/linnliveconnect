@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package>
     <name>LinnLiveConnect</name>
-    <version>1.1.41</version>
+    <version>1.1.42</version>
     <stability>stable</stability>
     <license>GPL v2</license>
     <channel>community</channel>
@@ -11,9 +11,9 @@
 Contains some workarounds to avoid bugs in original Magento modules and additional functionality to operate Magento store remotely.</description>
     <notes>minor bug fixes</notes>
     <authors><author><name>Albert Andrejev</name><user>albert_andrejev</user><email>albert@linnsystems.com</email></author><author><name>Pavel Nikolajev</name><user>Pavel_LL2</user><email>pavel.nokolajev@linnsystems.com</email></author><author><name>Aleksandr Kornev</name><user>alex_LL2</user><email>alex.kornevs@linnsystems.com</email></author></authors>
-    <date>2014-04-16</date>
-    <time>13:18:55</time>
-    <contents><target name="magelocal"><dir name="LinnSystems"><dir name="LinnLiveConnect"><dir name="Helper"><file name="Data.php" hash="5fe5216de67d4e69a0f418b0cd7780ee"/></dir><dir name="Model"><dir name="Api"><file name="V2.php" hash="92f252fdbe817193d1cdf7ba4a402191"/></dir></dir><dir name="etc"><file name="api.xml" hash="2d53cb9b318de468f6d2e3d388bb8732"/><file name="config.xml" hash="2d1d6338d93e36b730efde622893b4e6"/><file name="wsdl.xml" hash="fc21f2963c1253f5f40e5e8414312174"/><file name="wsi.xml" hash="ef000d5115f5988664f58df8b9139e5e"/></dir></dir></dir></target><target name="mageetc"><dir name="modules"><file name="LinnSystems_LinnLiveConnect.xml" hash="19c48712cd0516815d6784592ada0881"/></dir></target></contents>
+    <date>2014-04-29</date>
+    <time>08:15:26</time>
+    <contents><target name="magelocal"><dir name="LinnSystems"><dir name="LinnLiveConnect"><dir name="Helper"><file name="Data.php" hash="5fe5216de67d4e69a0f418b0cd7780ee"/></dir><dir name="Model"><dir name="Api"><file name="V2.php" hash="92f252fdbe817193d1cdf7ba4a402191"/></dir></dir><dir name="etc"><file name="api.xml" hash="cfb207e1a27826802b0bbef69a4213a6"/><file name="config.xml" hash="9367dc40a0ce3d4078039f495ccd6527"/><file name="wsdl.xml" hash="fc21f2963c1253f5f40e5e8414312174"/><file name="wsi.xml" hash="ef000d5115f5988664f58df8b9139e5e"/></dir></dir></dir></target><target name="mageetc"><dir name="modules"><file name="LinnSystems_LinnLiveConnect.xml" hash="19c48712cd0516815d6784592ada0881"/></dir></target></contents>
     <compatible/>
     <dependencies><required><php><min>5.2.0</min><max>6.0.0</max></php></required></dependencies>
 </package>
