@@ -427,7 +427,19 @@ class LinnSystems_LinnLiveConnect_Model_Community extends LinnSystems_LinnLiveCo
 	 * @return boolean
 	 */
 	protected function deleteProductImage($productId, $file, $identifierType = 'id') {
-        return Mage::getModel('catalog/product_attribute_media_api') -> remove($productId, $file, $identifierType);
+        if(Mage::app()->isSingleStoreMode()){
+            return Mage::getModel('catalog/product_attribute_media_api') -> remove($productId, $file, $identifierType);
+        }
+        
+        $product = Mage::helper('catalog/product') -> getProduct($productId, 'default', $identifierType);
+        $mediaGalleryAttribute = Mage::getModel('catalog/resource_eav_attribute')->loadByCode($product->getEntityTypeId(), 'media_gallery');
+        $gallery = $product->getMediaGalleryImages();
+        foreach ($gallery as $image){
+            if($file == $image->getFile()){
+                $mediaGalleryAttribute->getBackend()->removeImage($product, $file);
+            }            
+        }
+        $product->save();        
 	}
 
 	/**
