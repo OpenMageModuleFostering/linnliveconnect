@@ -204,6 +204,7 @@ class LinnSystems_LinnLiveConnect_Model_Community extends LinnSystems_LinnLiveCo
             'compilation_enabled' => (bool)(defined('COMPILER_INCLUDE_PATH')),
             'max_upload_size' => min((int)ini_get("upload_max_filesize"), (int)ini_get("post_max_size"), (int)ini_get("memory_limit")),
             'store'=>Mage::helper('linnLiveConnect') -> currentStoreCode($store),
+            'is_multi_store'=> !Mage::app()->isSingleStoreMode(),
             'extension_version'=>Mage::helper('linnLiveConnect/settings') -> getVersion(),
             'max_execution_time'=>ini_get("max_execution_time")
         );
@@ -384,7 +385,6 @@ class LinnSystems_LinnLiveConnect_Model_Community extends LinnSystems_LinnLiveCo
 	 * @return boolean
 	 */
 	protected function updateProductImage($productId, $file, $data, $store = null, $identifierType = 'id') {
-    
 		return Mage::getModel('catalog/product_attribute_media_api') -> update($productId, $file, Mage::helper('linnLiveConnect') -> objectToArray($data), $store, $identifierType);
 	}
 
@@ -427,8 +427,7 @@ class LinnSystems_LinnLiveConnect_Model_Community extends LinnSystems_LinnLiveCo
 	 * @return boolean
 	 */
 	protected function deleteProductImage($productId, $file, $identifierType = 'id') {
-
-		return Mage::getModel('catalog/product_attribute_media_api') -> remove($productId, $file, $identifierType);
+        return Mage::getModel('catalog/product_attribute_media_api') -> remove($productId, $file, $identifierType);
 	}
 
 	/**

@@ -322,12 +322,10 @@ class LinnSystems_LinnLiveConnect_Helper_Data extends Mage_Core_Helper_Abstract
     
     public function createProductData($productData){
 
-        //if (property_exists($productData, 'websites') === false) {
-        //    $defaultStore = $this->getDefaultStore();
-        //    if($defaultStore){
-        //        $productData->websites = array($defaultStore->getWebsiteId());
-        //    }
-        //}
+        $defaultStore = $this->getDefaultStore();
+        if($defaultStore){
+            $productData->websites = array($defaultStore->getWebsiteId());
+        }
 
         if (property_exists($productData, 'category_ids') === true) {
             $productData->category_ids = is_array($productData->category_ids) ? $productData->category_ids : array($productData->category_ids);

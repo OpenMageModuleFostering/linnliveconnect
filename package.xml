@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package>
     <name>LinnLiveConnect</name>
-    <version>1.1.56</version>
+    <version>1.1.57</version>
     <stability>stable</stability>
     <license>GPL v2</license>
     <channel>community</channel>
@@ -9,11 +9,11 @@
     <summary>Extended SOAP WS-I compliant API to support integration with LinnLive2.</summary>
     <description>Extended SOAP WS-I compliant API to support integration with LinnLive2 (http://www.linnlive.com).&#xD;
 Contains some workarounds to avoid bugs in original Magento modules and additional functionality to operate Magento store remotely.</description>
-    <notes>improve compatibility with third party extensions</notes>
+    <notes>fixes for store support</notes>
     <authors><author><name>Albert Andrejev</name><user>albert_andrejev</user><email>albert@linnsystems.com</email></author><author><name>Pavel Nikolajev</name><user>Pavel_LL2</user><email>pavel.nokolajev@linnsystems.com</email></author><author><name>Aleksandr Kornev</name><user>alex_LL2</user><email>alex.kornevs@linnsystems.com</email></author></authors>
-    <date>2014-11-17</date>
-    <time>09:26:38</time>
-    <contents><target name="magelocal"><dir name="LinnSystems"><dir name="LinnLiveConnect"><dir name="Helper"><file name="Data.php" hash="62cd16402139b5316cb7b70fa6d2695c"/><file name="Factory.php" hash="7e0a0e26fa3618917f3540b799b05840"/><file name="Settings.php" hash="086ba912d38dc66964a2f40f685394a5"/></dir><dir name="Model"><dir name="Api"><file name="V2.php" hash="a60247b30a00144ee34b77b74821266a"/></dir><dir name="Category"><file name="Api.php" hash="c01d5bb1dfb59a559c3b94615593e38d"/></dir><file name="Community.php" hash="9018b657efc39133e30e57ff31fcc789"/><file name="Main.php" hash="bdf4ddce8fa2b01d75bd9f69ae854ab3"/><dir name="Product"><dir name="Api"><file name="V2.php" hash="0497a6775a80f0292b47aa0e64eee77d"/></dir><file name="Api.php" hash="721f80734374313c91d2cfbf46fb7a17"/><dir name="Attribute"><file name="Api.php" hash="d0678623a145bc2d76993819bd63bdb9"/><dir name="Media"><file name="Api.php" hash="62d58c61d93371793ebe94162755c4cd"/></dir></dir><dir name="Link"><file name="Api.php" hash="d42a76ca6368eabad4e4a96fd40a93a2"/></dir></dir></dir><dir name="etc"><file name="api.xml" hash="a4b2a568bf5b2def5f3fe32c06b4528c"/><file name="config.xml" hash="f60368e8365a7b2518c78f3b28d02b9d"/><file name="wsdl.xml" hash="2b450fd6a6332d20583aaa4fc52012b6"/><file name="wsi.xml" hash="67dfb6257459f972cebaa06e3443a67f"/></dir></dir></dir></target><target name="mageetc"><dir name="modules"><file name="LinnSystems_LinnLiveConnect.xml" hash="19c48712cd0516815d6784592ada0881"/></dir></target></contents>
+    <date>2014-11-20</date>
+    <time>08:50:30</time>
+    <contents><target name="magelocal"><dir name="LinnSystems"><dir name="LinnLiveConnect"><dir name="Helper"><file name="Data.php" hash="c7af92d5533ba7da2ef5eab65b58f3bd"/><file name="Factory.php" hash="7e0a0e26fa3618917f3540b799b05840"/><file name="Settings.php" hash="086ba912d38dc66964a2f40f685394a5"/></dir><dir name="Model"><dir name="Api"><file name="V2.php" hash="a60247b30a00144ee34b77b74821266a"/></dir><dir name="Category"><file name="Api.php" hash="c01d5bb1dfb59a559c3b94615593e38d"/></dir><file name="Community.php" hash="c14017ef16aa55f37fbd52fd74ae6ea3"/><file name="Main.php" hash="bdf4ddce8fa2b01d75bd9f69ae854ab3"/><dir name="Product"><dir name="Api"><file name="V2.php" hash="0497a6775a80f0292b47aa0e64eee77d"/></dir><file name="Api.php" hash="721f80734374313c91d2cfbf46fb7a17"/><dir name="Attribute"><file name="Api.php" hash="d0678623a145bc2d76993819bd63bdb9"/><dir name="Media"><file name="Api.php" hash="62d58c61d93371793ebe94162755c4cd"/></dir></dir><dir name="Link"><file name="Api.php" hash="d42a76ca6368eabad4e4a96fd40a93a2"/></dir></dir></dir><dir name="etc"><file name="api.xml" hash="a4b2a568bf5b2def5f3fe32c06b4528c"/><file name="config.xml" hash="38782ebee68e58d804b3a17f490f6656"/><file name="wsdl.xml" hash="2b450fd6a6332d20583aaa4fc52012b6"/><file name="wsi.xml" hash="67dfb6257459f972cebaa06e3443a67f"/></dir></dir></dir></target><target name="mageetc"><dir name="modules"><file name="LinnSystems_LinnLiveConnect.xml" hash="19c48712cd0516815d6784592ada0881"/></dir></target></contents>
     <compatible/>
     <dependencies><required><php><min>5.2.0</min><max>6.0.0</max></php></required></dependencies>
 </package>
