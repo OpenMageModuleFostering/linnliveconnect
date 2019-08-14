@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <LinnSystems_LinnLiveConnect>
+            <active>true</active>
+            <codePool>local</codePool>
+        </LinnSystems_LinnLiveConnect>
+    </modules>
+</config>
