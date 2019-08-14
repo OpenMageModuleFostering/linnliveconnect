@@ -105,10 +105,6 @@ and click on "Check for Upgrades", and upgrade you LinnLiveConnect extension to 
                         <code>111</code>
                         <message>Invalid filters.</message>
 					</filters_invalid>
-					<filters_invalid>
-                        <code>111</code>
-                        <message>Invalid filters.</message>
-					</filters_invalid>
 					<version_not_specified>
                         <code>112</code>
                         <message>Version is not specified.</message>
