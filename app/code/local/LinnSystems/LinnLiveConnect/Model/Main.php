@@ -266,7 +266,7 @@ class LinnSystems_LinnLiveConnect_Model_Main extends Mage_Core_Model_Abstract {
 	public function disableIndexing() {
     
 		$states = array();
-		$blocked = array('cataloginventory_stock', 'catalog_product_flat', 'catalog_category_flat', 'catalogsearch_fulltext');
+		$blocked = array('cataloginventory_stock', 'catalog_product_flat', 'catalog_category_flat');
 
 		$processes = Mage::getSingleton('index/indexer') -> getProcessesCollection();
 		foreach ($processes as $process) {
