@@ -1,6 +1,37 @@
 <?php
 class Settings {
-    const VERSION = 49;
+    public static function getVersion() {   
+        return Mage::getConfig()->getModuleConfig("LinnSystems_LinnLiveConnect")->version;
+    }
+    public static function getShortVersion(){
+        $version = explode('.',self::getVersion());
+        return array_pop($version);
+    }
+}
+
+class Mage_Catalog_Model_Product_Api_V2_LL extends Mage_Catalog_Model_Product_Api_V2{
+    public function create($type, $set, $sku, $productData, $store){
+        $tries = 0;
+        $maxtries = 3;
+        Mage::setIsDeveloperMode(true);
+        
+        do {
+            $retry = false;
+            try {       
+                return parent::create($type, $set, $sku, $productData, $store);
+            } catch (Exception $e) {
+               
+                if ($tries < $maxtries && $e->getMessage()=='SQLSTATE[40001]: Serialization failure: 1213 Deadlock found when trying to get lock; try restarting transaction') {
+                    $retry = true;
+                    sleep(1);
+                }else{
+                    throw $e;
+                }
+                $tries++;
+            }
+
+        } while ($retry);      
+    }
 }
 
 class LinnSystems_LinnLiveConnect_Model_Api_V2 {
@@ -76,16 +107,16 @@ class LinnSystems_LinnLiveConnect_Model_Api_V2 {
         $worker = Factory::createWorker($version);
         return $worker->updatePriceBulk($data, $store, $identifierType);
     }
-
+    /*
     public function debugInfo()
     {
-        $worker = Factory::createWorker(Settings::VERSION);
+        $worker = Factory::createWorker(Settings::getShortVersion());
         return $worker->debugInfo();
     }
- 
-    public function getGeneralInfo()
+    */
+    public function getGeneralInfo($version)
     {
-        $worker = Factory::createWorker(Settings::VERSION);
+        $worker = Factory::createWorker($version);
         return $worker->getGeneralInfo();
     }    
     
@@ -99,7 +130,7 @@ class Factory {
         $version = intval($version);
 
         if ($version == 0) throw new Mage_Api_Exception('version_not_specified');
-        if (Settings::VERSION < $version ) throw new Mage_Api_Exception('wrong_version');
+        if (Settings::getShortVersion() < $version ) throw new Mage_Api_Exception('wrong_version');
     }
 
     public static function createWorker($version)
@@ -769,6 +800,9 @@ class LinnLiveMain extends Mage_Core_Model_Abstract {
 
     
     protected function reindexSingleProduct($product){
+        /*        $indexer = Mage::getSingleton('index/indexer');
+        $indexer->lockIndexer();        
+        $indexer->unlockIndexer();   */    
         $event = Mage::getSingleton('index/indexer')->logEvent( $product, $product->getResource()->getType(), Mage_Index_Model_Event::TYPE_SAVE, false);
         Mage::getSingleton('index/indexer')->getProcessByCode('catalog_url')->setMode(Mage_Index_Model_Process::MODE_REAL_TIME)->processEvent($event);   
     }
@@ -865,7 +899,7 @@ class LinnLiveMain extends Mage_Core_Model_Abstract {
         $productData->categories = $productData->category_ids;
         
         //merge into 1?
-        $productAPI = new Mage_Catalog_Model_Product_Api_V2();
+        $productAPI = new Mage_Catalog_Model_Product_Api_V2_LL();
         $productId = $productAPI->create('configurable', $set, $sku, $productData, $store);
 
         list($assignedProductsArray, $attributesSetArray) = $this->_prepareConfigurableData($productsSet, $attributesSet, false);           
@@ -956,7 +990,7 @@ class LinnLiveMain extends Mage_Core_Model_Abstract {
         $verInfo = Mage::getVersionInfo();
 
         $result = array(
-            'llc_ver' => Settings::VERSION,
+            'llc_ver' => Settings::getVersion(),
             'magento_ver' => trim("{$verInfo['major']}.{$verInfo['minor']}.{$verInfo['revision']}" . ($verInfo['patch'] != '' ? ".{$verInfo['patch']}" : ""). "-{$verInfo['stability']}{$verInfo['number']}", '.-'),
             'php_ver' => phpversion(),
             'api_config' => $config
@@ -1398,23 +1432,23 @@ class LinnLiveMain extends Mage_Core_Model_Abstract {
 
         $productData = $this->_fixAttributes($productData);
 
-        $productAPI = new Mage_Catalog_Model_Product_Api_V2();
-
+        $productAPI = new Mage_Catalog_Model_Product_Api_V2_LL();
+        
         return $productAPI->create($type, $set, $sku, $productData, $store);
     }
-
+    /*
     public function debugInfo()
     {
         $verInfo = Mage::getVersionInfo();
 
         $result = array(
-            'llc_ver' => Settings::VERSION,
+            'llc_ver' => Settings::getShortVersion(),
             'magento_ver' => $verInfo
         );
 
         return $result;
     }
-
+    */
     public function getProductStoreURL($productId, $store = null, $identifierType = 'id') {
 
         $storeId = $this->getStoreCode($store);
