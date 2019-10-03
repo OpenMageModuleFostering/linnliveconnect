@@ -1,16 +1,19 @@
 {
-    "name": "OpenMageModuleFostering/LinnLiveConnect",
+    "name": "OpenMageModuleFostering\/LinnLiveConnect",
     "type": "magento-module",
     "license": "GPL-v2",
     "homepage": "",
     "description": "Extended SOAP WS-I compliant API to support integration with LinnLive2.",
     "authors": [
-    {
-        "name": "Aleksandr Kornev",
-        "email": "alex.kornevs@linnsystems.com"
-    }
-],
+        {
+            "name": "Aleksandr Kornev",
+            "email": "alex.kornevs@linnsystems.com"
+        }
+    ],
     "suggest": {
-        "magento-hackathon/magento-composer-installer": "*"
-    }
+        "magento-hackathon\/magento-composer-installer": "*"
+    },
+    "keywords": [
+        "openmage-module"
+    ]
 }
